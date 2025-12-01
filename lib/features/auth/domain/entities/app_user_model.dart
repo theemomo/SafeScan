@@ -1,9 +1,11 @@
-class AppUserModel {
+import 'package:equatable/equatable.dart';
+
+class AppUserModel extends Equatable {
   final String uid;
   final String name;
   final String email;
 
-  AppUserModel({required this.uid, required this.email, required this.name});
+  const AppUserModel({required this.uid, required this.email, required this.name});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{'uid': uid, 'email': email, 'name': name};
@@ -16,4 +18,7 @@ class AppUserModel {
       name: map['name'] as String,
     );
   }
+
+  @override
+  List<Object?> get props => [uid, name, email];
 }
