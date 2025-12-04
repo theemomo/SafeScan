@@ -4,7 +4,10 @@ import 'package:safe_scan/features/home/domain/errors/virustotal_exceptions.dart
 import 'package:safe_scan/features/home/domain/repos/api_repo.dart';
 
 class VirustotalRepo extends ApiRepo {
-  final dio = Dio();
+  final Dio dio;
+
+  VirustotalRepo({Dio? dio}) : dio = dio ?? Dio();
+
   @override
   Future<DomainResponseModel> fetchDomainReport(String domain) async {
     final url = 'https://www.virustotal.com/api/v3/domains/$domain';

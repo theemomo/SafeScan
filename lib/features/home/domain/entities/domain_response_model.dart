@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:equatable/equatable.dart';
 
 DomainResponseModel domainResponseModelFromJson(String str) =>
     DomainResponseModel.fromJson(json.decode(str));
@@ -6,7 +7,7 @@ DomainResponseModel domainResponseModelFromJson(String str) =>
 String domainResponseModelToJson(DomainResponseModel data) =>
     json.encode(data.toJson());
 
-class DomainResponseModel {
+class DomainResponseModel extends Equatable {
   final Data data;
 
   DomainResponseModel({required this.data});
@@ -15,9 +16,12 @@ class DomainResponseModel {
       DomainResponseModel(data: Data.fromJson(json["data"]));
 
   Map<String, dynamic> toJson() => {"data": data.toJson()};
+
+  @override
+  List<Object?> get props => [data];
 }
 
-class Data {
+class Data extends Equatable {
   final String id;
   final String type;
   final Attributes attributes;
@@ -35,9 +39,12 @@ class Data {
     "type": type,
     "attributes": attributes.toJson(),
   };
+
+  @override
+  List<Object?> get props => [id, type, attributes];
 }
 
-class Attributes {
+class Attributes extends Equatable {
   final Map<String, LastAnalysisResult> lastAnalysisResults;
   final LastAnalysisStats lastAnalysisStats;
   final List<LastDnsRecord> lastDnsRecords;
@@ -55,7 +62,6 @@ class Attributes {
         LastAnalysisResult.fromJson(v),
       ),
     ),
-
     lastAnalysisStats: LastAnalysisStats.fromJson(json["last_analysis_stats"]),
     lastDnsRecords: List<LastDnsRecord>.from(
       json["last_dns_records"].map((x) => LastDnsRecord.fromJson(x)),
@@ -71,9 +77,12 @@ class Attributes {
       lastDnsRecords.map((x) => x.toJson()),
     ),
   };
+
+  @override
+  List<Object?> get props => [lastAnalysisResults, lastAnalysisStats, lastDnsRecords];
 }
 
-class LastAnalysisResult {
+class LastAnalysisResult extends Equatable {
   final Method method;
   final String engineName;
   final Category category;
@@ -100,6 +109,9 @@ class LastAnalysisResult {
     "category": categoryValues.reverse[category],
     "result": resultValues.reverse[result],
   };
+
+  @override
+  List<Object?> get props => [method, engineName, category, result];
 }
 
 enum Category { HARMLESS, MALICIOUS, UNDETECTED, SUSPICIOUS }
@@ -125,7 +137,7 @@ final resultValues = EnumValues({
   "suspicious": Result.SUSPICIOUS,
 });
 
-class LastAnalysisStats {
+class LastAnalysisStats extends Equatable {
   final int malicious;
   final int suspicious;
   final int undetected;
@@ -156,9 +168,12 @@ class LastAnalysisStats {
     "harmless": harmless,
     "timeout": timeout,
   };
+
+  @override
+  List<Object?> get props => [malicious, suspicious, undetected, harmless, timeout];
 }
 
-class LastDnsRecord {
+class LastDnsRecord extends Equatable {
   final String type;
   final int ttl;
   final String value;
@@ -184,6 +199,9 @@ class LastDnsRecord {
     "value": value,
     "priority": priority,
   };
+
+  @override
+  List<Object?> get props => [type, ttl, value, priority];
 }
 
 class EnumValues<T> {
