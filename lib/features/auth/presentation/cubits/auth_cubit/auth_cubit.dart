@@ -1,13 +1,20 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:safe_scan/features/auth/domain/entities/app_user_model.dart';
 import 'package:safe_scan/features/auth/domain/repos/auth_repo.dart';
 
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
+class AuthCubit extends Cubit<AuthState> with ChangeNotifier {
   final AuthRepo _authRepo;
   AuthCubit(this._authRepo) : super(AuthInitial());
+
+  @override
+  void emit(AuthState state) {
+    super.emit(state);
+    notifyListeners();
+  }
 
   String _formatError(Object e) {
     final msg = e.toString();

@@ -1,82 +1,93 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:safe_scan/features/auth/domain/entities/app_user_model.dart';
 import 'package:safe_scan/features/auth/domain/repos/auth_repo.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthRepo extends AuthRepo {
-  final _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth;
 
-  @override
-  Future<AppUserModel?> getCurrentUser() async {
-    if (!(_auth.currentUser != null)) {
-      return null;
-    }
-    final user = _auth.currentUser;
+  FirebaseAuthRepo(this.auth);
+
+  // Mappers
+  AppUserModel _mapUser(User user) {
     return AppUserModel(
-      uid: user?.uid ?? '',
-      email: user?.email ?? '',
-      name: '',
+      uid: user.uid,
+      email: user.email ?? '',
+      name: user.displayName ?? '',
     );
   }
 
+  // Get current user
   @override
-  Future<void> logout() async {
-    await _auth.signOut();
+  Future<AppUserModel?> getCurrentUser() async {
+    final user = auth.currentUser;
+    if (user == null) return null;
+    return _mapUser(user);
   }
 
+  // Logout
   @override
-  Future<AppUserModel?> loginWithEmailAndPassword(
-    String email,
-    String password,
-  ) async {
+  Future<void> logout() async {
+    await auth.signOut();
+  }
+
+  // Login
+  @override
+  Future<AppUserModel> loginWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     try {
-      final UserCredential userCredential = await _auth
-          .signInWithEmailAndPassword(email: email, password: password);
-      return AppUserModel(
-        uid: userCredential.user!.uid,
-        email: userCredential.user!.email ?? '',
-        name: '',
+      final credential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
+
+      final user = credential.user!;
+      return _mapUser(user);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw Exception('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        throw Exception('Wrong password provided.');
-      } else {
-        throw Exception('Login failed: ${e.message}');
-      }
+      throw _mapFirebaseError(e);
     }
   }
 
+  // Register
   @override
-  Future<AppUserModel?> registerWithEmailAndPassword(
-    String email,
-    String password,
-    String name,
-  ) async {
-    // TODO: implement registerWithEmailAndPassword
+  Future<AppUserModel> registerWithEmailAndPassword({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
     try {
-      final UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      return AppUserModel(
-        uid: userCredential.user!.uid,
-        email: userCredential.user!.email ?? '',
-        name: name,
+      final credential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
+
+      final user = credential.user!;
+      await user.updateDisplayName(name);
+
+      return _mapUser(user);
     } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'email-already-in-use':
-          throw Exception('This email is already registered.');
-        case 'invalid-email':
-          throw Exception('The email address is invalid.');
-        case 'weak-password':
-          throw Exception('The password is too weak.');
-        case 'operation-not-allowed':
-          throw Exception('Email/password accounts are disabled.');
-        default:
-          throw Exception('Registration failed: ${e.message}');
-      }
-    } catch (e) {
-      throw Exception('Unexpected error: $e');
+      throw _mapFirebaseError(e);
+    }
+  }
+
+  // Centralized Firebase error mapper
+  Exception _mapFirebaseError(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        return Exception('No user found for this email.');
+      case 'wrong-password':
+        return Exception('Incorrect password.');
+      case 'email-already-in-use':
+        return Exception('This email is already registered.');
+      case 'invalid-email':
+        return Exception('Invalid email format.');
+      case 'weak-password':
+        return Exception('Password is too weak.');
+      case 'operation-not-allowed':
+        return Exception('Email/password accounts are disabled.');
+      default:
+        return Exception(e.message ?? 'Authentication failed.');
     }
   }
 }

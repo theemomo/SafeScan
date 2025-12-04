@@ -5,7 +5,11 @@ class AppUserModel extends Equatable {
   final String name;
   final String email;
 
-  const AppUserModel({required this.uid, required this.email, required this.name});
+  const AppUserModel({
+    required this.uid,
+    required this.email,
+    required this.name,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{'uid': uid, 'email': email, 'name': name};
