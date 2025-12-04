@@ -15,7 +15,8 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        // centerTitle: true,
+        elevation: 0,
+        shadowColor: Colors.transparent,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(18.0),
             child: SvgPicture.asset(
               'assets/svgs/search.svg',
               height: 18.75.h,

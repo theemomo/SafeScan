@@ -4,7 +4,9 @@ import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:safe_scan/features/auth/presentation/screens/login_screen.dart';
 import 'package:safe_scan/features/auth/presentation/screens/register_screen.dart';
+import 'package:safe_scan/features/home/domain/entities/domain_response_model.dart';
 import 'package:safe_scan/features/home/presentation/screens/home_screen.dart';
+import 'package:safe_scan/features/home/presentation/screens/report_screen.dart';
 
 class AppRouter {
   final AuthCubit authCubit;
@@ -43,6 +45,11 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return const HomeScreen();
         },
+        routes: [
+          GoRoute(name: RouteNames.report, path: "report", builder: (context, state) {
+            return ReportScreen(reportData: state.extra as DomainResponseModel);
+          }),
+        ]
       ),
       GoRoute(
         name: RouteNames.login,

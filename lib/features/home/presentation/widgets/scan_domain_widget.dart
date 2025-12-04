@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
 import 'package:safe_scan/features/home/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
 import 'package:safe_scan/features/home/presentation/widgets/dashed_container.dart';
@@ -91,11 +93,15 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                     ),
                   );
                 } else if (state is ScanDomainLoaded) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Domain scanned successfully!'),
-                      backgroundColor: Colors.green,
-                    ),
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   const SnackBar(
+                  //     content: Text('Domain scanned successfully!'),
+                  //     backgroundColor: Colors.green,
+                  //   ),
+                  // );
+                  context.goNamed(
+                    RouteNames.report,
+                    extra: state.domainReport,
                   );
                 }
               },
@@ -141,27 +147,6 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                     ),
                   ),
                 );
-              },
-            ),
-            BlocBuilder<ScanDomainCubit, ScanDomainState>(
-              builder: (context, state) {
-                if (state is ScanDomainLoaded) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Domain ID: ${state.domainReport.data.id}'),
-                      Text(
-                        'Analysis Status: ${state.domainReport.data.attributes.lastAnalysisStats.harmless} harmless, ${state.domainReport.data.attributes.lastAnalysisStats.malicious} malicious',
-                      ),
-                    ],
-                  );
-                } else if (state is ScanDomainError) {
-                  return Text(
-                    'Error: ${state.message}',
-                    style: const TextStyle(color: Colors.red),
-                  );
-                }
-                return const SizedBox();
               },
             ),
             SizedBox(height: 16.h),
