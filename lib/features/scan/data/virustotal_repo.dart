@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:safe_scan/features/home/domain/entities/domain_response_model.dart';
-import 'package:safe_scan/features/home/domain/errors/virustotal_exceptions.dart';
-import 'package:safe_scan/features/home/domain/repos/api_repo.dart';
+import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart';
+import 'package:safe_scan/features/scan/domain/errors/virustotal_exceptions.dart';
+import 'package:safe_scan/features/scan/domain/repos/api_repo.dart';
 
 class VirustotalRepo extends ApiRepo {
   final Dio dio;

@@ -6,9 +6,9 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:safe_scan/features/home/domain/entities/domain_response_model.dart'
+import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart'
     as _i2;
-import 'package:safe_scan/features/home/domain/repos/api_repo.dart' as _i3;
+import 'package:safe_scan/features/scan/domain/repos/api_repo.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

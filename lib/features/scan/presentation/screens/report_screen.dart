@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
 import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
-import 'package:safe_scan/features/home/domain/entities/domain_response_model.dart';
-import 'package:safe_scan/features/home/presentation/widgets/circle_indicator.dart';
+import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart';
+import 'package:safe_scan/features/scan/presentation/widgets/circle_indicator.dart';
 
 class ReportScreen extends StatelessWidget {
   final DomainResponseModel reportData;
@@ -240,6 +240,7 @@ class ReportScreen extends StatelessWidget {
                           children: [
                             Text(
                               vendorName,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400,

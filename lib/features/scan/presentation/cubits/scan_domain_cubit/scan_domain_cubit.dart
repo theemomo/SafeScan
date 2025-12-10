@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:safe_scan/features/home/domain/entities/domain_response_model.dart';
-import 'package:safe_scan/features/home/domain/errors/virustotal_exceptions.dart';
-import 'package:safe_scan/features/home/domain/repos/api_repo.dart';
+import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart';
+import 'package:safe_scan/features/scan/domain/errors/virustotal_exceptions.dart';
+import 'package:safe_scan/features/scan/domain/repos/api_repo.dart';
 
 part 'scan_domain_state.dart';
 

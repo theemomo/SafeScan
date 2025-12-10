@@ -5,7 +5,7 @@ import "package:flutter_svg/svg.dart";
 import "package:go_router/go_router.dart";
 import "package:safe_scan/core/utils/app_colors.dart";
 import "package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart";
-import "package:safe_scan/features/home/presentation/widgets/tabs_widget.dart";
+import "package:safe_scan/features/scan/presentation/widgets/tabs_widget.dart";
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

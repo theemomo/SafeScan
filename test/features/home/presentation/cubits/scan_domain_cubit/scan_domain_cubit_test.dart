@@ -2,10 +2,10 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:safe_scan/features/home/domain/entities/domain_response_model.dart';
-import 'package:safe_scan/features/home/domain/errors/virustotal_exceptions.dart';
-import 'package:safe_scan/features/home/domain/repos/api_repo.dart';
-import 'package:safe_scan/features/home/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
+import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart';
+import 'package:safe_scan/features/scan/domain/errors/virustotal_exceptions.dart';
+import 'package:safe_scan/features/scan/domain/repos/api_repo.dart';
+import 'package:safe_scan/features/scan/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
 
 import 'scan_domain_cubit_test.mocks.dart';
 

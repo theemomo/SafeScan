@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safe_scan/features/home/data/virustotal_repo.dart';
-import 'package:safe_scan/features/home/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
-import 'package:safe_scan/features/home/presentation/widgets/scan_domain_widget.dart';
-import 'package:safe_scan/features/home/presentation/widgets/scan_file_widget.dart';
+import 'package:safe_scan/features/scan/data/virustotal_repo.dart';
+import 'package:safe_scan/features/scan/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
+import 'package:safe_scan/features/scan/presentation/widgets/scan_domain_widget.dart';
+import 'package:safe_scan/features/scan/presentation/widgets/scan_file_widget.dart';
 
 class TabsWidget extends StatefulWidget {
   const TabsWidget({super.key});

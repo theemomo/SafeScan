@@ -4,9 +4,9 @@ import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:safe_scan/features/auth/presentation/screens/login_screen.dart';
 import 'package:safe_scan/features/auth/presentation/screens/register_screen.dart';
-import 'package:safe_scan/features/home/domain/entities/domain_response_model.dart';
-import 'package:safe_scan/features/home/presentation/screens/home_screen.dart';
-import 'package:safe_scan/features/home/presentation/screens/report_screen.dart';
+import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart';
+import 'package:safe_scan/features/scan/presentation/screens/home_screen.dart';
+import 'package:safe_scan/features/scan/presentation/screens/report_screen.dart';
 
 class AppRouter {
   final AuthCubit authCubit;

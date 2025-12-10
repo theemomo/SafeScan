@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
-import 'package:safe_scan/features/home/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
-import 'package:safe_scan/features/home/presentation/widgets/dashed_container.dart';
+import 'package:safe_scan/features/scan/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
+import 'package:safe_scan/features/scan/presentation/widgets/dashed_container.dart';
 
 class ScanDomainWidget extends StatefulWidget {
   const ScanDomainWidget({super.key});
@@ -77,7 +77,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                 filled: true,
                 fillColor: const Color(0xFFF1F1F4),
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: 22.h,
+                  vertical: 16.h,
                   horizontal: 16.w,
                 ),
               ),
@@ -110,7 +110,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                   return ElevatedButton(
                     onPressed: null,
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 65.h),
+                      minimumSize: Size(double.infinity, 55.h),
                       backgroundColor: AppColors.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.r),
@@ -132,7 +132,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                     context.read<ScanDomainCubit>().scanDomain(url);
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 65.h),
+                    minimumSize: Size(double.infinity, 55.h),
                     backgroundColor: AppColors.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.r),
