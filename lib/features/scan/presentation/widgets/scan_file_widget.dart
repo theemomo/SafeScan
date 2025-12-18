@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math' as console;
 
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
