@@ -18,3 +18,8 @@ class ScanDomainError extends ScanDomainState {
 
   ScanDomainError(this.message);
 }
+class ScanDomainNotFound extends ScanDomainState {
+  final String message;
+
+  ScanDomainNotFound(this.message);
+}

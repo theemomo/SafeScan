@@ -5,8 +5,10 @@ import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubi
 import 'package:safe_scan/features/auth/presentation/screens/login_screen.dart';
 import 'package:safe_scan/features/auth/presentation/screens/register_screen.dart';
 import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart';
+import 'package:safe_scan/features/scan/domain/entities/file_response_model.dart';
+import 'package:safe_scan/features/scan/presentation/screens/domain_report_screen.dart';
+import 'package:safe_scan/features/scan/presentation/screens/file_report_screen.dart';
 import 'package:safe_scan/features/scan/presentation/screens/home_screen.dart';
-import 'package:safe_scan/features/scan/presentation/screens/report_screen.dart';
 
 class AppRouter {
   final AuthCubit authCubit;
@@ -46,10 +48,25 @@ class AppRouter {
           return const HomeScreen();
         },
         routes: [
-          GoRoute(name: RouteNames.report, path: "report", builder: (context, state) {
-            return ReportScreen(reportData: state.extra as DomainResponseModel);
-          }),
-        ]
+          GoRoute(
+            name: RouteNames.domainReport,
+            path: "domain-report",
+            builder: (context, state) {
+              return DomainReportScreen(
+                reportData: state.extra as DomainResponseModel,
+              );
+            },
+          ),
+          GoRoute(
+            name: RouteNames.fileReport,
+            path: "file-report",
+            builder: (context, state) {
+              return FileReportScreen(
+                reportData: state.extra as FileResponseModel,
+              );
+            },
+          ),
+        ],
       ),
       GoRoute(
         name: RouteNames.login,

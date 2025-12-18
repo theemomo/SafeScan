@@ -14,8 +14,16 @@ class ScanDomainCubit extends Cubit<ScanDomainState> {
   Future<void> scanDomain(String domain) async {
     emit(ScanDomainLoading());
     try {
-      final DomainResponseModel domainReport = await apiRepo.fetchDomainReport(domain);
-      emit(ScanDomainLoaded(domainReport));
+      final DomainResponseModel domainReport = await apiRepo.fetchDomainReport(
+        domain,
+      );
+      if (domainReport.isNotFound) {
+        emit(ScanDomainNotFound('No report found for this domain.'));
+      } else {
+        emit(ScanDomainLoaded(domainReport));
+      }
+    } on NotFoundException catch (e) {
+      emit(ScanDomainNotFound(e.message));
     } on VirusTotalException catch (e) {
       emit(ScanDomainError(e.message));
     } catch (e) {

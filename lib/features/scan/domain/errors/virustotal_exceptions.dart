@@ -29,7 +29,7 @@ class UnauthorizedException extends VirusTotalException {
 
 class NotFoundException extends VirusTotalException {
   NotFoundException(String message)
-    : super('Not Found Error: $message', statusCode: 404);
+    : super('Not Found Error: No Report Found For This Request', statusCode: 404);
 }
 
 class BadRequestException extends VirusTotalException {

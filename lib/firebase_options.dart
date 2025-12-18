@@ -47,7 +47,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'YOUR_FIREBASE_WEB_API_KEY',
+    apiKey: 'AIzaSyDsQAsfNx1vbTzWu3DFTKcx3JYEk5MzwbM',
     appId: '1:848680098744:web:cea1e70917a019c3cacd4d',
     messagingSenderId: '848680098744',
     projectId: 'safe-scan-17e7e',
@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR_FIREBASE_ANDROID_API_KEY',
+    apiKey: 'AIzaSyB1fVkPgmLAV20jWJjjvSUR-JWlT4dbxn0',
     appId: '1:848680098744:android:0ab4406bd7463bf6cacd4d',
     messagingSenderId: '848680098744',
     projectId: 'safe-scan-17e7e',
@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'YOUR_FIREBASE_IOS_API_KEY',
+    apiKey: 'AIzaSyC1GWvjx6-VoyVUn78Hhnk-F0dXWXiQm2o',
     appId: '1:848680098744:ios:55ee4e46c78a3d66cacd4d',
     messagingSenderId: '848680098744',
     projectId: 'safe-scan-17e7e',

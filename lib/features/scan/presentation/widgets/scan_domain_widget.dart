@@ -92,15 +92,16 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                       backgroundColor: Colors.red,
                     ),
                   );
+                } else if (state is ScanDomainNotFound) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.message),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                 } else if (state is ScanDomainLoaded) {
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   const SnackBar(
-                  //     content: Text('Domain scanned successfully!'),
-                  //     backgroundColor: Colors.green,
-                  //   ),
-                  // );
                   context.goNamed(
-                    RouteNames.report,
+                    RouteNames.domainReport,
                     extra: state.domainReport,
                   );
                 }
@@ -128,8 +129,38 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                 }
                 return ElevatedButton(
                   onPressed: () {
-                    final url = _domainController.text;
-                    context.read<ScanDomainCubit>().scanDomain(url);
+                    final input = _domainController.text.trim();
+
+                    final domainRegex = RegExp(
+                      r'^(?!:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$',
+                    );
+
+                    if (input.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Please enter a domain or subdomain (e.g. domain.com)',
+                          ),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    if (!domainRegex.hasMatch(input)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Invalid format.\nUse: domain.com or sub.domain.com',
+                          ),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    // Valid domain or subdomain
+                    context.read<ScanDomainCubit>().scanDomain(input);
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(double.infinity, 55.h),
