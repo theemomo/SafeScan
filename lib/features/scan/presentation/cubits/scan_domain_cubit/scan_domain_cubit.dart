@@ -27,7 +27,7 @@ class ScanDomainCubit extends Cubit<ScanDomainState> {
     } on VirusTotalException catch (e) {
       emit(ScanDomainError(e.message));
     } catch (e) {
-      emit(ScanDomainError('An unexpected error occurred: ${e.toString()}'));
+      emit(ScanDomainError('An unexpected error occurred'));
     }
   }
 }

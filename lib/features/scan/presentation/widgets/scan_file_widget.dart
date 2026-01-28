@@ -103,7 +103,7 @@ class ScanFileWidget extends StatelessWidget {
                       final result = await FilePicker.platform.pickFiles();
                       if (result == null || result.files.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("No file selected")),
+                          const SnackBar(content: Text("No file selected")),
                         );
                         return;
                       }
@@ -112,9 +112,9 @@ class ScanFileWidget extends StatelessWidget {
                       final bytes = await file.readAsBytes();
 
                       // Calculate hashes
-                      final md5Hash = md5.convert(bytes).toString();
-                      final sha1Hash = sha1.convert(bytes).toString();
-                      final sha256Hash = sha256.convert(bytes).toString();                 
+                      // final md5Hash = md5.convert(bytes).toString();
+                      // final sha1Hash = sha1.convert(bytes).toString();
+                      final sha256Hash = sha256.convert(bytes).toString();
 
                       context.read<ScanFileCubit>().scanFile(sha256Hash);
                     } catch (e) {

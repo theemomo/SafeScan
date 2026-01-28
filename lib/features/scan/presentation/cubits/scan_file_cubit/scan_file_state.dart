@@ -13,17 +13,17 @@ class ScanFileLoading extends ScanFileState {}
 class ScanFileLoaded extends ScanFileState {
   final FileResponseModel fileReport;
 
-  ScanFileLoaded(this.fileReport);
+  const ScanFileLoaded(this.fileReport);
 }
 
 class ScanFileError extends ScanFileState {
   final String message;
 
-  ScanFileError(this.message);
+  const ScanFileError(this.message);
 }
 
 class ScanFileNotFound extends ScanFileState {
   final String message;
 
-  ScanFileNotFound(this.message);
+  const ScanFileNotFound(this.message);
 }

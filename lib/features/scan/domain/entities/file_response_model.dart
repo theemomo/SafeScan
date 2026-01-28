@@ -65,7 +65,7 @@ class Data extends Equatable {
     return Data(
       id: json['id']?.toString() ?? '',
       type: json['type']?.toString() ?? '',
-      links: json['links'] != null ? Links.fromJson(json['links']) : Links(self: ''),
+      links: json['links'] != null ? Links.fromJson(json['links']) : const Links(self: ''),
       attributes: json['attributes'] != null
           ? Attributes.fromJson(json['attributes'])
           : Attributes.empty(),
@@ -179,7 +179,7 @@ class Attributes extends Equatable {
   }
 
   static Attributes empty() {
-    return Attributes(
+    return const Attributes(
       meaningfulName: '',
       lastAnalysisResults: {},
       timesSubmitted: 0,

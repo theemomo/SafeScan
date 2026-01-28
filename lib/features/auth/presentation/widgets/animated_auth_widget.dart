@@ -30,13 +30,15 @@ class _AnimatedAuthWidgetState extends State<AnimatedAuthWidget>
 
     final curve = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeOut, // make the transition start quickly and ends slowly
+      curve:
+          Curves.easeOut, // make the transition start quickly and ends slowly
     );
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(curve);
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0.5), end: Offset.zero)
-            .animate(curve);
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.5),
+      end: Offset.zero,
+    ).animate(curve);
 
     Future.delayed(Duration(milliseconds: widget.delay), () {
       if (mounted) {
@@ -55,10 +57,7 @@ class _AnimatedAuthWidgetState extends State<AnimatedAuthWidget>
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: _fadeAnimation,
-      child: SlideTransition(
-        position: _slideAnimation,
-        child: widget.child,
-      ),
+      child: SlideTransition(position: _slideAnimation, child: widget.child),
     );
   }
 }

@@ -6,7 +6,7 @@ class CircleIndicator extends StatelessWidget {
   final int malicious;
 
   const CircleIndicator({
-    Key? super.key,
+    super.key,
     required this.harmless,
     required this.malicious,
   });
