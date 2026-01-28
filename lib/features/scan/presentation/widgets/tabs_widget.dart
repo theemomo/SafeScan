@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safe_scan/features/scan/data/virustotal_repo.dart';
+import 'package:safe_scan/core/di/injection_container.dart';
 import 'package:safe_scan/features/scan/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
 import 'package:safe_scan/features/scan/presentation/cubits/scan_file_cubit/scan_file_cubit.dart';
 import 'package:safe_scan/features/scan/presentation/widgets/scan_domain_widget.dart';
@@ -40,11 +40,11 @@ class _TabsWidgetState extends State<TabsWidget> {
           index: selectedTab,
           children: [
             BlocProvider(
-              create: (context) => ScanDomainCubit(VirustotalRepo()),
+              create: (context) => sl<ScanDomainCubit>(),
               child: const ScanDomainWidget(),
             ),
             BlocProvider(
-              create: (context) => ScanFileCubit(VirustotalRepo()),
+              create: (context) => sl<ScanFileCubit>(),
               child: const ScanFileWidget(),
             ),
           ],
