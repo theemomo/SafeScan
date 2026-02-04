@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       } else if (state is Authenticated) {
-                        context.go('/');
+                        context.goNamed(RouteNames.home);
                       }
                     },
                     buildWhen: (previous, current) =>

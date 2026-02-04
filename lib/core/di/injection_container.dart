@@ -26,7 +26,7 @@ Future<void> init() async {
   sl.registerLazySingleton<ApiRepo>(() => VirustotalRepo(dio: sl<Dio>())); // to call it use sl<ApiRepo>()
 
   // Cubits
-  sl.registerFactory<AuthCubit>(() => AuthCubit(sl<FirebaseAuthRepo>())); // to call it use sl<AuthCubit>()
+  sl.registerLazySingleton<AuthCubit>(() => AuthCubit(sl<FirebaseAuthRepo>())); // to call it use sl<AuthCubit>()
   sl.registerFactory<ScanFileCubit>(() => ScanFileCubit(sl<ApiRepo>())); // to call it use sl<ScanFileCubit>()
   sl.registerFactory<ScanDomainCubit>(() => ScanDomainCubit(sl<ApiRepo>())); // to call it use sl<ScanDomainCubit>()
 }

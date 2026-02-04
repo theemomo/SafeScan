@@ -26,12 +26,15 @@ class AuthCubit extends Cubit<AuthState> with ChangeNotifier {
   Future<void> login(String email, String password) async {
     try {
       emit(AuthLoading());
+      print("cubit-loading");
       final AppUserModel? user = await _authRepo.loginWithEmailAndPassword(
         email: email,
         password: password,
       );
       emit(Authenticated(user: user));
+      print("cubit-authenticated");
     } catch (e) {
+      print("cubit-error");
       emit(AuthFailure(_formatError(e)));
       await Future.delayed(const Duration(milliseconds: 300));
       emit(AuthInitial());

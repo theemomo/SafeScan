@@ -137,8 +137,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               fieldController: _usernameController,
                               onFieldSubmitted: (_) {
                                 _usernameFocusNode.unfocus();
-                                FocusScope.of(context)
-                                    .requestFocus(_emailFocusNode);
+                                FocusScope.of(
+                                  context,
+                                ).requestFocus(_emailFocusNode);
                               },
                               label: "Enter your username",
                               keyboardType: TextInputType.text,
@@ -202,8 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                               label: "Enter Password",
                               keyboardType: TextInputType.visiblePassword,
-                              validator:
-                                  AppValidators.validateRegisterPassword,
+                              validator: AppValidators.validateRegisterPassword,
                               fieldFocusNode: _passwordFocusNode,
                               isPassword: true,
                             ),
@@ -228,7 +228,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         );
                       } else if (state is Authenticated) {
-                        context.go('/');
+                        context.goNamed(RouteNames.home);
                       }
                     },
                     buildWhen: (previous, current) =>
