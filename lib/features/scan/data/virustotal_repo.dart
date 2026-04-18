@@ -41,7 +41,6 @@ class VirustotalRepo extends ApiRepo {
           case 401:
             throw UnauthorizedException(message);
           case 404:
-            // This is the key: handle the "hash not found" scenario
             throw NotFoundException(message);
           case 500:
             throw ServerException(message, 500);

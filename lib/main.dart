@@ -3,15 +3,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:safe_scan/core/route/app_router.dart';
 import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:safe_scan/firebase_options.dart';
 import 'package:safe_scan/core/di/injection_container.dart' as di;
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await di.init();
+
+  try {
+    await dotenv.load(fileName: ".env");
+    final apiKey = dotenv.env['GEMINI_API_KEY'];
+    if (apiKey != null && apiKey.isNotEmpty) {
+      Gemini.init(apiKey: apiKey);
+    }
+  } catch (e) {
+    debugPrint('Error loading .env or initializing Gemini: $e');
+  }
+
   runApp(
     BlocProvider(
       // create: (context) => AuthCubit(FirebaseAuthRepo(FirebaseAuth.instance))..checkAuthStatus(),

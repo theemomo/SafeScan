@@ -13,7 +13,9 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // External
-  sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance); // to call it use sl<FirebaseAuth>()
+  sl.registerLazySingleton<FirebaseAuth>(
+    () => FirebaseAuth.instance,
+  ); // to call it use sl<FirebaseAuth>()
   sl.registerLazySingleton<Dio>(() => Dio()); // to call it use sl<Dio>()
 
   // Repositories
@@ -21,12 +23,22 @@ Future<void> init() async {
     () => FirebaseAuthRepo(sl<FirebaseAuth>()),
   ); // to call it use sl<FirebaseAuthRepo>()
 
-  sl.registerLazySingleton<AppRouter>(() => AppRouter(sl<AuthCubit>())); // to call it use sl<AppRouter>()
+  sl.registerLazySingleton<AppRouter>(
+    () => AppRouter(sl<AuthCubit>()),
+  ); // to call it use sl<AppRouter>()
 
-  sl.registerLazySingleton<ApiRepo>(() => VirustotalRepo(dio: sl<Dio>())); // to call it use sl<ApiRepo>()
+  sl.registerLazySingleton<ApiRepo>(
+    () => VirustotalRepo(dio: sl<Dio>()),
+  ); // to call it use sl<ApiRepo>()
 
   // Cubits
-  sl.registerLazySingleton<AuthCubit>(() => AuthCubit(sl<FirebaseAuthRepo>())); // to call it use sl<AuthCubit>()
-  sl.registerFactory<ScanFileCubit>(() => ScanFileCubit(sl<ApiRepo>())); // to call it use sl<ScanFileCubit>()
-  sl.registerFactory<ScanDomainCubit>(() => ScanDomainCubit(sl<ApiRepo>())); // to call it use sl<ScanDomainCubit>()
+  sl.registerLazySingleton<AuthCubit>(
+    () => AuthCubit(sl<FirebaseAuthRepo>()),
+  ); // to call it use sl<AuthCubit>()
+  sl.registerFactory<ScanFileCubit>(
+    () => ScanFileCubit(sl<ApiRepo>()),
+  ); // to call it use sl<ScanFileCubit>()
+  sl.registerFactory<ScanDomainCubit>(
+    () => ScanDomainCubit(sl<ApiRepo>()),
+  ); // to call it use sl<ScanDomainCubit>()
 }
