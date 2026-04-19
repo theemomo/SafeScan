@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:safe_scan/features/reports/domain/entities/report_extras.dart';
 import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
 import 'package:safe_scan/features/scan/presentation/cubits/scan_file_cubit/scan_file_cubit.dart';
@@ -71,7 +72,7 @@ class ScanFileWidget extends StatelessWidget {
                 } else if (state is ScanFileLoaded) {
                   context.goNamed(
                     RouteNames.fileReport,
-                    extra: state.fileReport,
+                    extra: FileReportExtra(model: state.fileReport),
                   );
                 }
               },

@@ -4,4 +4,5 @@ class RouteNames {
   static const String home = 'home';
   static const String domainReport = 'domain-report';
   static const String fileReport = 'file-report';
+  static const String savedReports = 'saved-reports';
 }

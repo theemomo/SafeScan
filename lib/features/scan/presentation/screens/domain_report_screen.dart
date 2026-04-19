@@ -1,18 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:safe_scan/core/di/injection_container.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
-import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
+import 'package:safe_scan/features/reports/domain/entities/report_extras.dart';
+import 'package:safe_scan/features/reports/domain/entities/saved_report.dart';
+import 'package:safe_scan/features/reports/presentation/cubits/saved_reports_cubit.dart';
 import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart';
 import 'package:safe_scan/features/scan/presentation/widgets/circle_indicator.dart';
 import 'package:safe_scan/features/scan/presentation/cubits/ai_explanation_cubit/ai_explanation_cubit.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 class DomainReportScreen extends StatelessWidget {
-  final DomainResponseModel reportData;
-  const DomainReportScreen({super.key, required this.reportData});
+  final DomainReportExtra extra;
+  const DomainReportScreen({super.key, required this.extra});
+
+  DomainResponseModel get reportData => extra.model;
 
   String _formatDate(int timestamp) {
     return DateTime.fromMillisecondsSinceEpoch(
@@ -64,6 +71,12 @@ class DomainReportScreen extends StatelessWidget {
     );
   }
 
+  String _threatLabel(int malicious, int suspicious) {
+    if (malicious > 0) return 'Dangerous';
+    if (suspicious > 0) return 'Suspicious';
+    return 'Safe';
+  }
+
   @override
   Widget build(BuildContext context) {
     final attributes = reportData.data!.attributes;
@@ -71,246 +84,309 @@ class DomainReportScreen extends StatelessWidget {
 
     final harmless = stats?.harmless ?? 0;
     final malicious = stats?.malicious ?? 0;
+    final suspicious = stats?.suspicious ?? 0;
     final totalDetections = harmless + malicious;
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor: const Color(0xFFF5F5F5),
-        appBar: AppBar(
-          elevation: 0,
-          shadowColor: Colors.transparent,
-          backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/svgs/shield.svg',
-                height: 24.h,
-                width: 24.w,
-              ),
-              Text(
-                'Safe',
-                style: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                'Scan',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: SvgPicture.asset(
-                'assets/svgs/search.svg',
-                height: 18.75.h,
-                width: 20.76.w,
-                colorFilter: const ColorFilter.mode(
-                  Color(0xFF707070),
-                  BlendMode.srcIn,
-                ),
-              ),
-            ),
-          ],
-          bottom: TabBar(
-            labelColor: AppColors.primaryColor,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: AppColors.primaryColor,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
-            tabs: const [
-              Tab(text: 'Technical Report'),
-              Tab(text: 'AI Summary'),
-            ],
-          ),
-        ),
-        drawer: Drawer(
-          child: Column(
-            children: [
-              const DrawerHeader(child: Text('Menu')),
-              GestureDetector(
-                onTap: () {},
-                child: const ListTile(title: Text('Page A')),
-              ),
-              GestureDetector(
-                onTap: () {
-                  BlocProvider.of<AuthCubit>(context).logout();
-                },
-                child: const ListTile(title: Text('Logout')),
-              ),
-            ],
-          ),
-        ),
-
-        body: Column(
-          children: [
-            /// HEADER
-            Container(
-              width: double.infinity,
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 8.h),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => context.pop(),
+    return BlocProvider<SavedReportsCubit>(
+      create: (_) => sl<SavedReportsCubit>(),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<SavedReportsCubit, SavedReportsState>(
+            listener: (context, state) {
+              if (state is SavedReportsSaved) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Report saved successfully!'),
+                    backgroundColor: Colors.green,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Report for ${reportData.data!.id}',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                );
+              } else if (state is SavedReportsAlreadySaved) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Report already saved.'),
+                    backgroundColor: Colors.orange,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                );
+              } else if (state is SavedReportsError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.red,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                );
+              }
+            },
+            child: DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                backgroundColor: const Color(0xFFF5F5F5),
+                appBar: AppBar(
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  backgroundColor: Colors.white,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/svgs/shield.svg',
+                        height: 24.h,
+                        width: 24.w,
+                      ),
+                      Text(
+                        'Safe',
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
                         ),
-                        if (attributes.lastAnalysisDate != null)
-                          Text(
-                            'Last Scanned: ${_formatDate(attributes.lastAnalysisDate!)}',
-                            style: TextStyle(
-                              fontSize: 10.sp,
-                              color: Colors.grey,
-                            ),
+                      ),
+                      Text(
+                        'Scan',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: SvgPicture.asset(
+                        'assets/svgs/search.svg',
+                        height: 18.75.h,
+                        width: 20.76.w,
+                        colorFilter: const ColorFilter.mode(
+                          Color(0xFF707070),
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  ],
+                  bottom: TabBar(
+                    labelColor: AppColors.primaryColor,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: AppColors.primaryColor,
+                    labelStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
+                    ),
+                    tabs: const [
+                      Tab(text: 'Technical Report'),
+                      Tab(text: 'AI Summary'),
+                    ],
+                  ),
+                ),
+                body: Column(
+                  children: [
+                    /// HEADER
+                    Container(
+                      width: double.infinity,
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 18.w,
+                        vertical: 8.h,
+                      ),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () => context.pop(),
                           ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            /// CONTENT
-            Expanded(
-              child: TabBarView(
-                children: [
-                  /// TAB 1: TECHNICAL
-                  SingleChildScrollView(
-                    child: _buildTechnicalTab(
-                      context,
-                      attributes,
-                      harmless,
-                      malicious,
-                      totalDetections,
-                    ),
-                  ),
-
-                  /// TAB 2: AI SUMMARY
-                  BlocProvider(
-                    create: (context) =>
-                        AiExplanationCubit()..generateExplanation(reportData),
-                    child: BlocBuilder<AiExplanationCubit, AiExplanationState>(
-                      builder: (context, state) {
-                        if (state is AiExplanationLoading) {
-                          return Center(
+                          Expanded(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
-                                SizedBox(height: 16.h),
                                 Text(
-                                  'Analyzing the scan results...',
+                                  'Report for ${reportData.data!.id}',
                                   style: TextStyle(
-                                    color: Colors.grey[600],
                                     fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
+                                if (attributes.lastAnalysisDate != null)
+                                  Text(
+                                    'Last Scanned: ${_formatDate(attributes.lastAnalysisDate!)}',
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
                               ],
                             ),
-                          );
-                        } else if (state is AiExplanationError) {
-                          return Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(24.w),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.error_outline,
-                                    size: 48.sp,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(height: 16.h),
-                                  Text(
-                                    state.message,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                  SizedBox(height: 16.h),
-                                  if (state.message.contains('.env'))
-                                    Text(
-                                      'Please create a .env file and add GEMINI_API_KEY=your_key in the root project folder, then restart your app.',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else if (state is AiExplanationLoaded) {
-                          return Container(
-                            color: Colors.white,
-                            child: Markdown(
-                              data: state.explanation,
-                              padding: EdgeInsets.all(24.w),
-                              styleSheet: MarkdownStyleSheet(
-                                p: TextStyle(fontSize: 15.sp, height: 1.5),
-                                h1: TextStyle(
-                                  fontSize: 22.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryColor,
-                                ),
-                                h2: TextStyle(
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                ),
-                                h3: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                listBullet: TextStyle(
-                                  fontSize: 16.sp,
-                                  color: AppColors.primaryColor,
-                                ),
-                                strong: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                blockquote: TextStyle(
-                                  color: Colors.grey[700],
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
+                          ),
+
+                          /// BOOKMARK BUTTON
+                          _BookmarkButton(
+                            target: reportData.data!.id,
+                            scanType: 'domain',
+                            threatLabel: _threatLabel(malicious, suspicious),
+                            maliciousCount: malicious,
+                            totalVendors: totalDetections,
+                            rawJson: jsonEncode(reportData.toJson()),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+
+                    /// CONTENT
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          /// TAB 1: TECHNICAL
+                          SingleChildScrollView(
+                            child: _buildTechnicalTab(
+                              context,
+                              attributes,
+                              harmless,
+                              malicious,
+                              totalDetections,
+                            ),
+                          ),
+
+                          /// TAB 2: AI SUMMARY
+                          BlocProvider(
+                            create: (context) {
+                              final cubit = AiExplanationCubit();
+                              final cached = extra.cachedAiSummary;
+                              if (cached != null && cached.isNotEmpty) {
+                                cubit.loadCached(cached);
+                              } else {
+                                cubit.generateExplanation(reportData);
+                              }
+                              return cubit;
+                            },
+                            child:
+                                BlocBuilder<
+                                  AiExplanationCubit,
+                                  AiExplanationState
+                                >(
+                                  builder: (context, state) {
+                                    if (state is AiExplanationLoading) {
+                                      return Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const CircularProgressIndicator(
+                                              color: AppColors.primaryColor,
+                                            ),
+                                            SizedBox(height: 16.h),
+                                            Text(
+                                              'Analyzing the scan results...',
+                                              style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontSize: 14.sp,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    } else if (state is AiExplanationError) {
+                                      return Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.all(24.w),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.error_outline,
+                                                size: 48.sp,
+                                                color: Colors.red,
+                                              ),
+                                              SizedBox(height: 16.h),
+                                              Text(
+                                                state.message,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                              SizedBox(height: 16.h),
+                                              if (state.message.contains(
+                                                '.env',
+                                              ))
+                                                Text(
+                                                  'Please create a .env file and add GEMINI_API_KEY=your_key in the root project folder, then restart your app.',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.grey[700],
+                                                    fontSize: 12.sp,
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    } else if (state is AiExplanationLoaded) {
+                                      return Container(
+                                        color: Colors.white,
+                                        child: Markdown(
+                                          data: state.explanation,
+                                          padding: EdgeInsets.all(24.w),
+                                          styleSheet: MarkdownStyleSheet(
+                                            p: TextStyle(
+                                              fontSize: 15.sp,
+                                              height: 1.5,
+                                            ),
+                                            h1: TextStyle(
+                                              fontSize: 22.sp,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                            h2: TextStyle(
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87,
+                                            ),
+                                            h3: TextStyle(
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            listBullet: TextStyle(
+                                              fontSize: 16.sp,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                            strong: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            blockquote: TextStyle(
+                                              color: Colors.grey[700],
+                                              fontStyle: FontStyle.italic,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -724,6 +800,127 @@ class DomainReportScreen extends StatelessWidget {
 
         SizedBox(height: 32.h),
       ],
+    );
+  }
+}
+
+// ── Bookmark button widget ────────────────────────────────────────────────────
+
+class _BookmarkButton extends StatefulWidget {
+  final String target;
+  final String scanType;
+  final String threatLabel;
+  final int maliciousCount;
+  final int totalVendors;
+  final String rawJson;
+
+  const _BookmarkButton({
+    required this.target,
+    required this.scanType,
+    required this.threatLabel,
+    required this.maliciousCount,
+    required this.totalVendors,
+    required this.rawJson,
+  });
+
+  @override
+  State<_BookmarkButton> createState() => _BookmarkButtonState();
+}
+
+class _BookmarkButtonState extends State<_BookmarkButton> {
+  bool _isSaved = false;
+  bool _checking = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfSaved();
+  }
+
+  Future<void> _checkIfSaved() async {
+    try {
+      final saved = await context.read<SavedReportsCubit>().isReportSaved(
+        widget.target,
+        widget.scanType,
+      );
+      if (mounted) {
+        setState(() {
+          _isSaved = saved;
+          _checking = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _isSaved = false;
+          _checking = false;
+        });
+      }
+    }
+  }
+
+  void _onTap(BuildContext context) {
+    if (_isSaved) {
+      context.read<SavedReportsCubit>().saveReport(
+        SavedReport(
+          scanType: widget.scanType,
+          target: widget.target,
+          threatLabel: widget.threatLabel,
+          maliciousCount: widget.maliciousCount,
+          totalVendors: widget.totalVendors,
+          aiSummary: '',
+          rawJson: widget.rawJson,
+          savedAt: DateTime.now().millisecondsSinceEpoch,
+        ),
+      );
+    } else {
+      // Collect current AI summary from the cubit if loaded
+      String aiSummary = '';
+      try {
+        final aiState = context.read<AiExplanationCubit?>()?.state;
+        if (aiState is AiExplanationLoaded) {
+          aiSummary = aiState.explanation;
+        }
+      } catch (_) {}
+
+      context.read<SavedReportsCubit>().saveReport(
+        SavedReport(
+          scanType: widget.scanType,
+          target: widget.target,
+          threatLabel: widget.threatLabel,
+          maliciousCount: widget.maliciousCount,
+          totalVendors: widget.totalVendors,
+          aiSummary: aiSummary,
+          rawJson: widget.rawJson,
+          savedAt: DateTime.now().millisecondsSinceEpoch,
+        ),
+      );
+      setState(() => _isSaved = true);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_checking) {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: SizedBox(
+          width: 20.w,
+          height: 20.h,
+          child: const CircularProgressIndicator(
+            strokeWidth: 2,
+            color: AppColors.primaryColor,
+          ),
+        ),
+      );
+    }
+    return IconButton(
+      tooltip: _isSaved ? 'Already saved' : 'Save report',
+      icon: Icon(
+        _isSaved ? Icons.bookmark : Icons.bookmark_border,
+        color: _isSaved ? AppColors.primaryColor : Colors.grey,
+      ),
+      onPressed: () => _onTap(context),
     );
   }
 }

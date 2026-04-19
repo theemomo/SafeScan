@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:safe_scan/core/di/injection_container.dart';
 import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:safe_scan/features/auth/presentation/screens/login_screen.dart';
 import 'package:safe_scan/features/auth/presentation/screens/register_screen.dart';
-import 'package:safe_scan/features/scan/domain/entities/domain_response_model.dart';
-import 'package:safe_scan/features/scan/domain/entities/file_response_model.dart';
+import 'package:safe_scan/features/reports/domain/entities/report_extras.dart';
+import 'package:safe_scan/features/reports/presentation/cubits/saved_reports_cubit.dart';
+import 'package:safe_scan/features/reports/presentation/screens/saved_reports_screen.dart';
 import 'package:safe_scan/features/scan/presentation/screens/domain_report_screen.dart';
 import 'package:safe_scan/features/scan/presentation/screens/file_report_screen.dart';
 import 'package:safe_scan/features/scan/presentation/screens/home_screen.dart';
@@ -53,7 +56,7 @@ class AppRouter {
             path: "domain-report",
             builder: (context, state) {
               return DomainReportScreen(
-                reportData: state.extra as DomainResponseModel,
+                extra: state.extra as DomainReportExtra,
               );
             },
           ),
@@ -62,7 +65,17 @@ class AppRouter {
             path: "file-report",
             builder: (context, state) {
               return FileReportScreen(
-                reportData: state.extra as FileResponseModel,
+                extra: state.extra as FileReportExtra,
+              );
+            },
+          ),
+          GoRoute(
+            name: RouteNames.savedReports,
+            path: "saved-reports",
+            builder: (context, state) {
+              return BlocProvider<SavedReportsCubit>(
+                create: (_) => sl<SavedReportsCubit>(),
+                child: const SavedReportsScreen(),
               );
             },
           ),

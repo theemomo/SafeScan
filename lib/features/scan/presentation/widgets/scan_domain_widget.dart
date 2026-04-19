@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:safe_scan/features/reports/domain/entities/report_extras.dart';
 import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
 import 'package:safe_scan/features/scan/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
@@ -102,7 +103,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                 } else if (state is ScanDomainLoaded) {
                   context.goNamed(
                     RouteNames.domainReport,
-                    extra: state.domainReport,
+                    extra: DomainReportExtra(model: state.domainReport),
                   );
                 }
               },

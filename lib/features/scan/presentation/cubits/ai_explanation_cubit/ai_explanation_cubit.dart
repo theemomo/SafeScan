@@ -11,6 +11,17 @@ part 'ai_explanation_state.dart';
 class AiExplanationCubit extends Cubit<AiExplanationState> {
   AiExplanationCubit() : super(AiExplanationInitial());
 
+  /// Immediately emits [AiExplanationLoaded] with [cachedText].
+  /// Used when opening a saved report that already has an AI summary.
+  void loadCached(String cachedText) {
+    if (cachedText.isNotEmpty) {
+      emit(AiExplanationLoaded(cachedText));
+    } else {
+      emit(AiExplanationInitial());
+    }
+  }
+
+
   static const int _whoisMaxLength = 800;
 
   /// Generates an explanation for a Domain scan report.
@@ -27,7 +38,13 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
 
       await _executeGeminiPrompt(prompt);
     } catch (e) {
-      emit(AiExplanationError('AI Analysis failed: ${e.toString()}'));
+      final errorStr = e.toString();
+      if (errorStr.contains('429')) {
+        emit(AiExplanationError(
+            'API Rate Limit Exceeded.\nPlease wait a minute before requesting another AI summary.'));
+      } else {
+        emit(AiExplanationError('AI Analysis failed: $errorStr'));
+      }
     }
   }
 
@@ -46,7 +63,13 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
 
       await _executeGeminiPrompt(prompt);
     } catch (e) {
-      emit(AiExplanationError('AI Analysis failed: ${e.toString()}'));
+      final errorStr = e.toString();
+      if (errorStr.contains('429')) {
+        emit(AiExplanationError(
+            'API Rate Limit Exceeded.\nPlease wait a minute before requesting another AI summary.'));
+      } else {
+        emit(AiExplanationError('AI Analysis failed: $errorStr'));
+      }
     }
   }
 
