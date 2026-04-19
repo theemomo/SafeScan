@@ -10,6 +10,8 @@ import 'package:safe_scan/features/scan/presentation/cubits/scan_domain_cubit/sc
 import 'package:safe_scan/features/scan/presentation/cubits/scan_file_cubit/scan_file_cubit.dart';
 import 'package:safe_scan/features/scan/domain/repos/api_repo.dart';
 import 'package:dio/dio.dart';
+import 'package:safe_scan/features/settings/data/locale_repository.dart';
+import 'package:safe_scan/features/settings/presentation/cubits/locale_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -50,5 +52,13 @@ Future<void> init() async {
   );
   sl.registerFactory<SavedReportsCubit>(
     () => SavedReportsCubit(sl<LocalReportsRepo>()),
+  );
+
+  // Locale / Settings
+  sl.registerLazySingleton<LocaleRepository>(
+    () => LocaleRepository(),
+  );
+  sl.registerLazySingleton<LocaleCubit>(
+    () => LocaleCubit(sl<LocaleRepository>()),
   );
 }

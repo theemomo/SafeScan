@@ -12,6 +12,8 @@ import 'package:safe_scan/features/reports/presentation/screens/saved_reports_sc
 import 'package:safe_scan/features/scan/presentation/screens/domain_report_screen.dart';
 import 'package:safe_scan/features/scan/presentation/screens/file_report_screen.dart';
 import 'package:safe_scan/features/scan/presentation/screens/home_screen.dart';
+import 'package:safe_scan/features/settings/presentation/screens/settings_screen.dart';
+import 'package:safe_scan/features/settings/presentation/screens/language_screen.dart';
 
 class AppRouter {
   final AuthCubit authCubit;
@@ -77,6 +79,20 @@ class AppRouter {
                 create: (_) => sl<SavedReportsCubit>(),
                 child: const SavedReportsScreen(),
               );
+            },
+          ),
+          GoRoute(
+            name: RouteNames.settings,
+            path: "settings",
+            builder: (context, state) {
+              return const SettingsScreen();
+            },
+          ),
+          GoRoute(
+            name: RouteNames.language,
+            path: "language",
+            builder: (context, state) {
+              return const LanguageScreen();
             },
           ),
         ],

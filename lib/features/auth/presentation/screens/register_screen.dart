@@ -8,6 +8,7 @@ import 'package:safe_scan/core/utils/app_validators.dart';
 import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:safe_scan/features/auth/presentation/widgets/animated_auth_widget.dart';
 import 'package:safe_scan/features/auth/presentation/widgets/app_text_field.dart';
+import 'package:safe_scan/l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -49,6 +50,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -94,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Create Account',
+                        l10n.registerTitle,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 18.sp,
@@ -103,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       Text(
-                        'Scan links and protect your digital shield.',
+                        l10n.registerTagline,
                         style: TextStyle(
                           color: const Color(0xFF797878),
                           fontSize: 14.sp,
@@ -125,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Username',
+                              l10n.username,
                               style: TextStyle(
                                 color: const Color(0xFF626262),
                                 fontSize: 16.sp,
@@ -141,7 +144,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   context,
                                 ).requestFocus(_emailFocusNode);
                               },
-                              label: "Enter your username",
+                              label: l10n.usernameHint,
                               keyboardType: TextInputType.text,
                               validator: AppValidators.validateUsername,
                               fieldFocusNode: _usernameFocusNode,
@@ -156,7 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Email',
+                              l10n.email,
                               style: TextStyle(
                                 color: const Color(0xFF626262),
                                 fontSize: 16.sp,
@@ -172,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   context,
                                 ).requestFocus(_passwordFocusNode);
                               },
-                              label: "Enter email or phone number",
+                              label: l10n.emailHint,
                               keyboardType: TextInputType.emailAddress,
                               validator: AppValidators.validateEmail,
                               fieldFocusNode: _emailFocusNode,
@@ -187,7 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Password',
+                              l10n.password,
                               style: TextStyle(
                                 color: const Color(0xFF626262),
                                 fontSize: 16.sp,
@@ -201,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 _passwordFocusNode.unfocus();
                                 _submit();
                               },
-                              label: "Enter Password",
+                              label: l10n.passwordHint,
                               keyboardType: TextInputType.visiblePassword,
                               validator: AppValidators.validateRegisterPassword,
                               fieldFocusNode: _passwordFocusNode,
@@ -261,7 +264,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         child: Text(
-                          "Sign Up",
+                          l10n.signUp,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,
@@ -284,7 +287,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       Text(
-                        '  Or  ',
+                        '  ${l10n.or}  ',
                         style: TextStyle(
                           color: const Color(0xFF797878),
                           fontSize: 16.sp,
@@ -324,7 +327,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               SizedBox(width: 10.w),
                               Text(
-                                'Facebook',
+                                l10n.facebook,
                                 style: TextStyle(
                                   color: const Color(0xFF797878),
                                   fontSize: 14.sp,
@@ -354,7 +357,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               SizedBox(width: 10.w),
                               Text(
-                                'Gmail',
+                                l10n.gmail,
                                 style: TextStyle(
                                   color: const Color(0xFF797878),
                                   fontSize: 14.sp,
@@ -375,7 +378,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Already have an account? ",
+                        "${l10n.alreadyHaveAccount} ",
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: const Color(0xFF797878),
@@ -386,7 +389,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           context.goNamed(RouteNames.login);
                         },
                         child: Text(
-                          "Login",
+                          l10n.login,
                           style: TextStyle(
                             color: const Color(0xFF1F41BB),
                             fontSize: 14.sp,

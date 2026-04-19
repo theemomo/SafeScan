@@ -7,12 +7,14 @@ import "package:safe_scan/core/route/route_names.dart";
 import "package:safe_scan/core/utils/app_colors.dart";
 import "package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart";
 import "package:safe_scan/features/scan/presentation/widgets/tabs_widget.dart";
+import "package:safe_scan/l10n/app_localizations.dart";
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -56,7 +58,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: _AppDrawer(),
+      drawer: const _AppDrawer(),
       body: Padding(
         padding: EdgeInsets.only(top: 50.h, left: 20.w, right: 20.w),
         child: SingleChildScrollView(
@@ -64,7 +66,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Analyze suspicious files and URLs',
+                l10n.homeTitle,
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
@@ -72,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Detect malware and automatically share with the security community',
+                l10n.homeSubtitle,
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
@@ -95,6 +97,7 @@ class _AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final authState = context.watch<AuthCubit>().state;
     final String userName = authState is Authenticated
         ? (authState.user?.name ?? 'User')
@@ -179,14 +182,14 @@ class _AppDrawer extends StatelessWidget {
             // ── Nav Items ────────────────────────────────────────────
             _DrawerNavTile(
               icon: Icons.home_outlined,
-              label: 'Home',
+              label: l10n.home,
               onTap: () {
                 Navigator.of(context).pop();
               },
             ),
             _DrawerNavTile(
               icon: Icons.bookmark_border_rounded,
-              label: 'Saved Reports',
+              label: l10n.savedReports,
               onTap: () {
                 Navigator.of(context).pop();
                 context.pushNamed(RouteNames.savedReports);
@@ -194,9 +197,10 @@ class _AppDrawer extends StatelessWidget {
             ),
             _DrawerNavTile(
               icon: Icons.settings_outlined,
-              label: 'System Settings',
+              label: l10n.systemSettings,
               onTap: () {
                 Navigator.of(context).pop();
+                context.pushNamed(RouteNames.settings);
               },
             ),
 
@@ -216,7 +220,7 @@ class _AppDrawer extends StatelessWidget {
                   size: 20.sp,
                 ),
                 title: Text(
-                  'Log out',
+                  l10n.logOut,
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 14.sp,

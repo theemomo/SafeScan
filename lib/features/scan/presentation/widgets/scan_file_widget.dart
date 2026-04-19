@@ -12,12 +12,14 @@ import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
 import 'package:safe_scan/features/scan/presentation/cubits/scan_file_cubit/scan_file_cubit.dart';
 import 'package:safe_scan/features/scan/presentation/widgets/dashed_container.dart';
+import 'package:safe_scan/l10n/app_localizations.dart';
 
 class ScanFileWidget extends StatelessWidget {
   const ScanFileWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return DashedContainer(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -36,7 +38,7 @@ class ScanFileWidget extends StatelessWidget {
             ),
             SizedBox(height: 24.h),
             Text(
-              "Choose File",
+              l10n.chooseFile,
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
@@ -44,7 +46,7 @@ class ScanFileWidget extends StatelessWidget {
               ),
             ),
             Text(
-              "We'll check if it's safe to open",
+              l10n.fileSafeHint,
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
@@ -104,7 +106,7 @@ class ScanFileWidget extends StatelessWidget {
                       final result = await FilePicker.platform.pickFiles();
                       if (result == null || result.files.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("No file selected")),
+                          SnackBar(content: Text(l10n.noFileSelected)),
                         );
                         return;
                       }
@@ -120,7 +122,7 @@ class ScanFileWidget extends StatelessWidget {
                       context.read<ScanFileCubit>().scanFile(sha256Hash);
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Error picking file: $e")),
+                        SnackBar(content: Text(l10n.errorPickingFile(e.toString()))),
                       );
                     }
                   },
@@ -132,7 +134,7 @@ class ScanFileWidget extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "Select File",
+                    l10n.selectFile,
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,

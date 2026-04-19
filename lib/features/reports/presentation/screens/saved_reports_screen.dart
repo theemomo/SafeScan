@@ -12,6 +12,7 @@ import 'package:safe_scan/features/scan/domain/entities/domain_response_model.da
 import 'package:safe_scan/features/scan/domain/entities/file_response_model.dart'
     as file_model;
 import 'package:safe_scan/core/route/route_names.dart';
+import 'package:safe_scan/l10n/app_localizations.dart';
 
 class SavedReportsScreen extends StatelessWidget {
   const SavedReportsScreen({super.key});
@@ -20,6 +21,7 @@ class SavedReportsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Load reports when screen opens
     context.read<SavedReportsCubit>().loadReports();
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -82,7 +84,7 @@ class SavedReportsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Scan Reports',
+              l10n.scanReports,
               style: TextStyle(
                 fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
@@ -91,7 +93,7 @@ class SavedReportsScreen extends StatelessWidget {
             ),
             SizedBox(height: 4.h),
             Text(
-              'Review security analysis results and threat assessments',
+              l10n.scanReportsSubtitle,
               style: TextStyle(
                 fontSize: 13.sp,
                 color: Colors.grey[600],
@@ -147,6 +149,7 @@ class SavedReportsScreen extends StatelessWidget {
   }
 
   void _openReport(BuildContext context, SavedReport report) {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final jsonMap = report.decodedJson;
       if (report.scanType == 'domain') {
@@ -171,7 +174,7 @@ class SavedReportsScreen extends StatelessWidget {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Could not open report: ${e.toString()}'),
+          content: Text(l10n.couldNotOpenReport(e.toString())),
           backgroundColor: Colors.red,
           behavior: SnackBarBehavior.floating,
         ),
@@ -181,10 +184,11 @@ class SavedReportsScreen extends StatelessWidget {
 
   void _deleteReport(BuildContext context, SavedReport report) {
     if (report.id == null) return;
+    final l10n = AppLocalizations.of(context)!;
     context.read<SavedReportsCubit>().deleteReport(report.id!);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('Report removed from saved.'),
+        content: Text(l10n.reportRemoved),
         backgroundColor: Colors.grey[800],
         behavior: SnackBarBehavior.floating,
         shape:
@@ -234,9 +238,9 @@ class _ReportCard extends StatelessWidget {
     return Icons.language;
   }
 
-  String get _typeBadge {
-    if (report.scanType == 'file') return 'File';
-    return 'URL';
+  String _typeBadge(AppLocalizations l10n) {
+    if (report.scanType == 'file') return l10n.file;
+    return l10n.url;
   }
 
   String get _aiExcerpt {
@@ -253,6 +257,7 @@ class _ReportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -301,7 +306,7 @@ class _ReportCard extends StatelessWidget {
                         border: Border.all(color: const Color(0xFFDDDDDD)),
                       ),
                       child: Text(
-                        _typeBadge,
+                        _typeBadge(l10n),
                         style: TextStyle(
                           fontSize: 11.sp,
                           fontWeight: FontWeight.w500,
@@ -372,7 +377,7 @@ class _ReportCard extends StatelessWidget {
                     size: 14.sp, color: _threatColor),
                 SizedBox(width: 4.w),
                 Text(
-                  '${report.maliciousCount}/${report.totalVendors} vendors flagged this',
+                  l10n.vendorsFlagged(report.maliciousCount.toString(), report.totalVendors.toString()),
                   style: TextStyle(
                     fontSize: 12.sp,
                     color: _threatColor,
@@ -414,6 +419,7 @@ class _ReportCard extends StatelessWidget {
 class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -433,7 +439,7 @@ class _EmptyState extends StatelessWidget {
           ),
           SizedBox(height: 20.h),
           Text(
-            'No saved reports yet',
+            l10n.noSavedReports,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -442,7 +448,7 @@ class _EmptyState extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            'Scan a domain or file and tap the\nbookmark icon to save it here.',
+            l10n.noSavedReportsHint,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 13.sp,

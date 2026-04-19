@@ -1,0 +1,83 @@
+{
+  "@@locale": "en",
+
+  "appName": "SafeScan",
+
+  "login": "Login",
+  "loginTagline": "Login to safely scan your links and stay ahead of online threats.",
+  "email": "Email",
+  "emailHint": "Enter email or phone number",
+  "password": "Password",
+  "passwordHint": "Enter Password",
+  "or": "Or",
+  "facebook": "Facebook",
+  "google": "Google",
+  "noAccount": "Don't have an account?",
+  "createAccount": "Create Account",
+
+  "registerTitle": "Create Account",
+  "registerTagline": "Scan links and protect your digital shield.",
+  "username": "Username",
+  "usernameHint": "Enter your username",
+  "signUp": "Sign Up",
+  "gmail": "Gmail",
+  "alreadyHaveAccount": "Already have an account?",
+
+  "homeTitle": "Analyze suspicious files and URLs",
+  "homeSubtitle": "Detect malware and automatically share with the security community",
+  "home": "Home",
+  "savedReports": "Saved Reports",
+  "systemSettings": "System Settings",
+  "logOut": "Log out",
+
+  "settings": "Settings",
+  "settingsSubtitle": "Customize your security analysis experience",
+  "changePassword": "Change password",
+  "notifications": "Notifications",
+  "language": "Language",
+  "helpSupport": "Help & Support",
+
+  "selectLanguage": "Select Language",
+  "english": "English",
+  "arabic": "Arabic",
+
+  "scanReports": "Scan Reports",
+  "scanReportsSubtitle": "Review security analysis results and threat assessments",
+  "noSavedReports": "No saved reports yet",
+  "noSavedReportsHint": "Scan a domain or file and tap the\nbookmark icon to save it here.",
+  "reportRemoved": "Report removed from saved.",
+  "couldNotOpenReport": "Could not open report: {error}",
+  "@couldNotOpenReport": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "vendorsFlagged": "{malicious}/{total} vendors flagged this",
+  "@vendorsFlagged": {
+    "placeholders": {
+      "malicious": { "type": "String" },
+      "total": { "type": "String" }
+    }
+  },
+  "file": "File",
+  "url": "URL",
+
+  "domain": "Domain",
+  "files": "Files",
+  "enterUrlToScan": "Enter URL to scan",
+  "urlSafeHint": "We'll check if it's safe to visit",
+  "enterDomainHint": "Enter a Domain or URL",
+  "scanDomain": "Scan Domain",
+  "pleaseEnterDomain": "Please enter a domain or subdomain (e.g. domain.com)",
+  "invalidDomainFormat": "Invalid format. Use: domain.com or sub.domain.com",
+  "chooseFile": "Choose File",
+  "fileSafeHint": "We'll check if it's safe to open",
+  "selectFile": "Select File",
+  "noFileSelected": "No file selected",
+  "errorPickingFile": "Error picking file: {error}",
+  "@errorPickingFile": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  }
+}

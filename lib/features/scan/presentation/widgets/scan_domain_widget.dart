@@ -8,6 +8,7 @@ import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
 import 'package:safe_scan/features/scan/presentation/cubits/scan_domain_cubit/scan_domain_cubit.dart';
 import 'package:safe_scan/features/scan/presentation/widgets/dashed_container.dart';
+import 'package:safe_scan/l10n/app_localizations.dart';
 
 class ScanDomainWidget extends StatefulWidget {
   const ScanDomainWidget({super.key});
@@ -20,6 +21,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
   final TextEditingController _domainController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return DashedContainer(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -38,7 +40,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
             ),
             SizedBox(height: 24.h),
             Text(
-              "Enter URL to scan",
+              l10n.enterUrlToScan,
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
@@ -46,7 +48,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
               ),
             ),
             Text(
-              "We'll check if it's safe to visit",
+              l10n.urlSafeHint,
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
@@ -59,7 +61,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
               keyboardType: TextInputType.url,
               maxLines: 1,
               decoration: InputDecoration(
-                hintText: "Enter a Domain or URL",
+                hintText: l10n.enterDomainHint,
                 hintStyle: TextStyle(
                   fontSize: 12.sp,
                   color: const Color(0xFFAAAAAA),
@@ -138,10 +140,8 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
 
                     if (input.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Please enter a domain or subdomain (e.g. domain.com)',
-                          ),
+                        SnackBar(
+                          content: Text(l10n.pleaseEnterDomain),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -150,10 +150,8 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
 
                     if (!domainRegex.hasMatch(input)) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Invalid format.\nUse: domain.com or sub.domain.com',
-                          ),
+                        SnackBar(
+                          content: Text(l10n.invalidDomainFormat),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -171,7 +169,7 @@ class _ScanDomainWidgetState extends State<ScanDomainWidget> {
                     ),
                   ),
                   child: Text(
-                    "Scan Domain",
+                    l10n.scanDomain,
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,

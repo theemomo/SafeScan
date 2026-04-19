@@ -6,6 +6,7 @@ import 'package:safe_scan/features/scan/presentation/cubits/scan_domain_cubit/sc
 import 'package:safe_scan/features/scan/presentation/cubits/scan_file_cubit/scan_file_cubit.dart';
 import 'package:safe_scan/features/scan/presentation/widgets/scan_domain_widget.dart';
 import 'package:safe_scan/features/scan/presentation/widgets/scan_file_widget.dart';
+import 'package:safe_scan/l10n/app_localizations.dart';
 
 class TabsWidget extends StatefulWidget {
   const TabsWidget({super.key});
@@ -18,6 +19,7 @@ class _TabsWidgetState extends State<TabsWidget> {
   int selectedTab = 0;
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         Container(
@@ -30,8 +32,8 @@ class _TabsWidgetState extends State<TabsWidget> {
             // mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(child: _tabBuilder("Domain", 0)),
-              Expanded(child: _tabBuilder("Files", 1)),
+              Expanded(child: _tabBuilder(l10n.domain, 0)),
+              Expanded(child: _tabBuilder(l10n.files, 1)),
             ],
           ),
         ),

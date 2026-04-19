@@ -1,93 +1,104 @@
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:safe_scan/features/reports/domain/entities/saved_report.dart';
 
 class LocalReportsRepo {
-  static const _dbName = 'safe_scan_reports.db';
-  static const _dbVersion = 1;
-  static const _table = 'saved_reports';
+  static const _keyReports = 'safe_scan_saved_reports_list';
 
-  Database? _db;
-
-  Future<Database> get database async {
-    _db ??= await _initDb();
-    return _db!;
+  int _nextId(List<SavedReport> reports) {
+    if (reports.isEmpty) return 1;
+    final ids = reports.map((e) => e.id ?? 0).toList();
+    ids.sort();
+    return ids.last + 1;
   }
 
-  Future<Database> _initDb() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, _dbName);
+  Future<List<SavedReport>> getAllReports() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonList = prefs.getStringList(_keyReports) ?? [];
 
-    return openDatabase(
-      path,
-      version: _dbVersion,
-      onCreate: (db, version) async {
-        await db.execute('''
-          CREATE TABLE $_table (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            scan_type TEXT NOT NULL,
-            target TEXT NOT NULL,
-            threat_label TEXT NOT NULL,
-            malicious_count INTEGER NOT NULL,
-            total_vendors INTEGER NOT NULL,
-            ai_summary TEXT NOT NULL,
-            raw_json TEXT NOT NULL,
-            saved_at INTEGER NOT NULL
-          )
-        ''');
-      },
-    );
+    final reports = jsonList.map((str) {
+      final map = jsonDecode(str) as Map<String, dynamic>;
+      return SavedReport.fromMap(map);
+    }).toList();
+
+    // Sort descending by savedAt
+    reports.sort((a, b) => b.savedAt.compareTo(a.savedAt));
+    return reports;
+  }
+
+  Future<void> _saveReports(List<SavedReport> reports) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonList = reports.map((r) => jsonEncode(r.toMap())).toList();
+    await prefs.setStringList(_keyReports, jsonList);
   }
 
   /// Insert a report. Returns the new row id.
   Future<int> insertReport(SavedReport report) async {
-    final db = await database;
-    return db.insert(
-      _table,
-      report.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
+    final reports = await getAllReports();
+    // Assign a new ID if it doesn't have one
+    int id = report.id ?? _nextId(reports);
 
-  /// Fetch all reports ordered by newest first.
-  Future<List<SavedReport>> getAllReports() async {
-    final db = await database;
-    final rows = await db.query(_table, orderBy: 'saved_at DESC');
-    return rows.map(SavedReport.fromMap).toList();
+    // Check if we are replacing by ID
+    final index = reports.indexWhere((r) => r.id == id);
+
+    final updatedReport = SavedReport(
+      id: id,
+      scanType: report.scanType,
+      target: report.target,
+      threatLabel: report.threatLabel,
+      maliciousCount: report.maliciousCount,
+      totalVendors: report.totalVendors,
+      aiSummary: report.aiSummary,
+      rawJson: report.rawJson,
+      savedAt: report.savedAt,
+    );
+
+    if (index >= 0) {
+      reports[index] = updatedReport;
+    } else {
+      reports.add(updatedReport);
+    }
+
+    await _saveReports(reports);
+    return id;
   }
 
   /// Delete a report by id.
   Future<void> deleteReport(int id) async {
-    final db = await database;
-    await db.delete(_table, where: 'id = ?', whereArgs: [id]);
+    final reports = await getAllReports();
+    reports.removeWhere((r) => r.id == id);
+    await _saveReports(reports);
   }
 
   /// Check if a report already exists by target + type.
   Future<bool> reportExists(String target, String scanType) async {
-    final db = await database;
-    final result = await db.query(
-      _table,
-      columns: ['id'],
-      where: 'target = ? AND scan_type = ?',
-      whereArgs: [target, scanType],
-      limit: 1,
-    );
-    return result.isNotEmpty;
+    final reports = await getAllReports();
+    return reports.any((r) => r.target == target && r.scanType == scanType);
   }
 
   /// Update the ai_summary for an existing saved report.
   Future<void> updateAiSummary(int id, String aiSummary) async {
-    final db = await database;
-    await db.update(
-      _table,
-      {'ai_summary': aiSummary},
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    final reports = await getAllReports();
+    final index = reports.indexWhere((r) => r.id == id);
+    if (index >= 0) {
+      final old = reports[index];
+      final updated = SavedReport(
+        id: old.id,
+        scanType: old.scanType,
+        target: old.target,
+        threatLabel: old.threatLabel,
+        maliciousCount: old.maliciousCount,
+        totalVendors: old.totalVendors,
+        aiSummary: aiSummary,
+        rawJson: old.rawJson,
+        savedAt: old.savedAt,
+      );
+      reports[index] = updated;
+      await _saveReports(reports);
+    }
   }
 
   Future<void> close() async {
-    final db = _db;
-    if (db != null) await db.close();
+    // No-op for shared_preferences
   }
 }
