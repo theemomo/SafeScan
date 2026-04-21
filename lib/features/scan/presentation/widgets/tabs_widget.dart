@@ -42,11 +42,11 @@ class _TabsWidgetState extends State<TabsWidget> {
           index: selectedTab,
           children: [
             BlocProvider(
-              create: (context) => sl<ScanDomainCubit>(),
+              create: (context) => getIt<ScanDomainCubit>(),
               child: const ScanDomainWidget(),
             ),
             BlocProvider(
-              create: (context) => sl<ScanFileCubit>(),
+              create: (context) => getIt<ScanFileCubit>(),
               child: const ScanFileWidget(),
             ),
           ],

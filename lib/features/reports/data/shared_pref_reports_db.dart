@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:safe_scan/features/reports/domain/entities/saved_report.dart';
+import 'package:safe_scan/features/reports/domain/repos/local_database_repo.dart';
 
-class LocalReportsRepo {
+class SharedPreferencesReportsDB implements LocalDatabaseRepo {
   static const _keyReports = 'safe_scan_saved_reports_list';
 
   int _nextId(List<SavedReport> reports) {
@@ -12,6 +13,13 @@ class LocalReportsRepo {
     return ids.last + 1;
   }
 
+  Future<void> _saveReports(List<SavedReport> reports) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonList = reports.map((r) => jsonEncode(r.toMap())).toList();
+    await prefs.setStringList(_keyReports, jsonList);
+  }
+
+  @override
   Future<List<SavedReport>> getAllReports() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonList = prefs.getStringList(_keyReports) ?? [];
@@ -26,13 +34,8 @@ class LocalReportsRepo {
     return reports;
   }
 
-  Future<void> _saveReports(List<SavedReport> reports) async {
-    final prefs = await SharedPreferences.getInstance();
-    final jsonList = reports.map((r) => jsonEncode(r.toMap())).toList();
-    await prefs.setStringList(_keyReports, jsonList);
-  }
-
   /// Insert a report. Returns the new row id.
+  @override
   Future<int> insertReport(SavedReport report) async {
     final reports = await getAllReports();
     // Assign a new ID if it doesn't have one
@@ -64,6 +67,7 @@ class LocalReportsRepo {
   }
 
   /// Delete a report by id.
+  @override
   Future<void> deleteReport(int id) async {
     final reports = await getAllReports();
     reports.removeWhere((r) => r.id == id);
@@ -71,12 +75,14 @@ class LocalReportsRepo {
   }
 
   /// Check if a report already exists by target + type.
+  @override
   Future<bool> reportExists(String target, String scanType) async {
     final reports = await getAllReports();
     return reports.any((r) => r.target == target && r.scanType == scanType);
   }
 
   /// Update the ai_summary for an existing saved report.
+  @override
   Future<void> updateAiSummary(int id, String aiSummary) async {
     final reports = await getAllReports();
     final index = reports.indexWhere((r) => r.id == id);
@@ -96,9 +102,5 @@ class LocalReportsRepo {
       reports[index] = updated;
       await _saveReports(reports);
     }
-  }
-
-  Future<void> close() async {
-    // No-op for shared_preferences
   }
 }

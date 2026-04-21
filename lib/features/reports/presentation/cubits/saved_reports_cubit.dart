@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:safe_scan/features/reports/data/local_reports_repo.dart';
 import 'package:safe_scan/features/reports/domain/entities/saved_report.dart';
+import 'package:safe_scan/features/reports/domain/repos/local_database_repo.dart';
 
 part 'saved_reports_state.dart';
 
 class SavedReportsCubit extends Cubit<SavedReportsState> {
-  final LocalReportsRepo _repo;
+  final LocalDatabaseRepo _repo;
 
   SavedReportsCubit(this._repo) : super(SavedReportsInitial());
 

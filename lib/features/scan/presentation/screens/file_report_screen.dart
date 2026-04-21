@@ -97,7 +97,7 @@ class FileReportScreen extends StatelessWidget {
     final totalDetections = harmless + malicious;
 
     return BlocProvider<SavedReportsCubit>(
-      create: (_) => sl<SavedReportsCubit>(),
+      create: (_) => getIt<SavedReportsCubit>(),
       child: Builder(
         builder: (context) {
           return BlocListener<SavedReportsCubit, SavedReportsState>(

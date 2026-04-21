@@ -1,0 +1,124 @@
+[33mcommit bc031cbbcb903df06f44b9b4d6e2533ce58d39c9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfix/loaclDatabase[m[33m, [m[1;31morigin/feature/localization[m[33m, [m[1;32mpr-1[m[33m, [m[1;32mfix/localDatabase[m[33m)[m
+Author: sandy <medhatmarina48@gmail.com>
+Date:   Sun Apr 19 19:59:19 2026 +0200
+
+    feat: complete app localization to English and Arabic, and fix web storage support
+
+[33mcommit d02637710246750c4f0dfa80f4cf2a955ab3aec4[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Sun Apr 19 18:39:50 2026 +0200
+
+    feat: local database to save the reports locally
+
+[33mcommit b2571d87ae55dc8a0130b27e8a30f2a463a20ba2[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Sat Apr 18 21:25:59 2026 +0200
+
+    feat: creating the ai explanation feature for domain&file reports to explain the technical report for non-technical users
+
+[33mcommit 6726551d9ad8bcdecd9b755f5252a1d4edd6ab1a[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Wed Feb 4 17:53:35 2026 +0200
+
+    fix multiple creation of auth cubit, by applying lazy singleton desgin pattern
+
+[33mcommit 8781488b07c144b9f2edf8dd2832deb095c0526d[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Wed Jan 28 14:44:50 2026 +0200
+
+    feat: integrate get_it for dependency injection
+    
+    - Added get_it package to pubspec.yaml
+    - Created central injection_container.dart for Service Locator setup
+    - Registered core dependencies: FirebaseAuth, Dio, and AppRouter
+    - Registered repositories: FirebaseAuthRepo and VirustotalRepo
+    - Registered cubits as factories: AuthCubit, ScanFileCubit, and ScanDomainCubit
+    - Refactored main.dart and TabsWidget to retrieve dependencies via sl()
+    - Cleaned up manual instantiation and redundant imports across the project
+
+[33mcommit 0ed33859842c1410666d6d809ee9a856db8a00f3[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Wed Jan 28 14:10:04 2026 +0200
+
+    update 2
+
+[33mcommit a54aeed71f5d719a82d6f331fe5ebc28fc38c3f1[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Thu Dec 18 15:44:32 2025 +0200
+
+    update
+
+[33mcommit dcbe7eed5045560bf2c9c300ffd6554d3132f529[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Thu Dec 18 15:32:11 2025 +0200
+
+    feat: Create file scan report screen
+    
+    This commit introduces a dedicated screen to display the results of a file scan.
+    
+    Key changes:
+    - Added FileReportModel with proper error handling.
+    - Enhanced DomainReportModel error handling.
+    - Implemented ScanFileWidget to allow users to pick a file for scanning.
+    - Created FileReportScreen to show a detailed view of the file analysis.
+    - Updated navigation flow: after a successful file scan, the app navigates to FileReportScreen, passing the scanned report data.
+
+[33mcommit 4f3077a8d6fd0a9b0e60451b1ec92a1e3fed38d6[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Wed Dec 10 13:34:59 2025 +0200
+
+    refactor: restructure home feature and add animations
+
+[33mcommit 65e154f42f1be84154337d54559d93e20cba4eb4[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Fri Dec 5 01:09:17 2025 +0200
+
+    feat: Create domain scan report screen
+    
+    This commit introduces a dedicated screen to display the results of a domain scan.
+    
+    Key changes:
+    - Added ReportScreen to present a detailed view of the domain analysis.
+    - Created CircleIndicator widget to visually represent scan statistics using the new percent_indicator dependency.
+    - Updated the navigation flow: after a successful domain scan, the app now navigates to the ReportScreen, passing the report data.
+    - Refactored ScanDomainWidget to remove the inline result display in favor of navigating to the new report screen.
+
+[33mcommit b25e6ac6b4230dd430d98d0cb2cd66a46c739326[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Thu Dec 4 21:33:39 2025 +0200
+
+    feat: Add unit tests for VirustotalRepo and ScanDomainCubit
+
+[33mcommit ba69babae3b450981f18c78f74db10b6b247ca7e[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Thu Dec 4 13:39:34 2025 +0200
+
+    feat: implement POC for scan domains feature
+    
+    This commit introduces the initial proof-of-concept for the domain scanning functionality. The report page is still under development.
+
+[33mcommit 77fbd7d872fd97103d2f9ed8e95e9bdf8a19f80d[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Tue Dec 2 00:20:48 2025 +0200
+
+    feat: Add unit tests for core auth logic
+    
+    - Adds comprehensive unit tests for AppValidators, FirebaseAuthRepo, and AuthCubit.
+    
+    - Introduces mockito, bloc_test, and build_runner to support testing and mocking.
+    
+    - Refactors AppUserModel and AuthState to use the equatable package for value comparison, enabling more robust tests.
+    
+    - Resolves a test dependency conflict by pinning the test package version.
+
+[33mcommit 2e89e1cc4bc15a2a74cf6aba1feaee3defabdb5e[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Mon Nov 24 00:18:53 2025 +0200
+
+    feat(auth): Complete UI implementation for Login and Registration screens
+
+[33mcommit 064022d053f882376200bd05154719e9a00ea6bb[m
+Author: Mohammad Moustafa <mohammad.moustafa.m1@gmail.com>
+Date:   Mon Oct 13 13:47:39 2025 +0300
+
+    first commit

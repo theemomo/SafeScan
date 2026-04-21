@@ -66,9 +66,7 @@ class AppRouter {
             name: RouteNames.fileReport,
             path: "file-report",
             builder: (context, state) {
-              return FileReportScreen(
-                extra: state.extra as FileReportExtra,
-              );
+              return FileReportScreen(extra: state.extra as FileReportExtra);
             },
           ),
           GoRoute(
@@ -76,7 +74,7 @@ class AppRouter {
             path: "saved-reports",
             builder: (context, state) {
               return BlocProvider<SavedReportsCubit>(
-                create: (_) => sl<SavedReportsCubit>(),
+                create: (_) => getIt<SavedReportsCubit>(),
                 child: const SavedReportsScreen(),
               );
             },

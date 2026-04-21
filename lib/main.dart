@@ -29,17 +29,15 @@ void main() async {
   }
 
   // Load persisted locale before the first frame
-  await di.sl<LocaleCubit>().loadLocale();
+  await di.getIt<LocaleCubit>().loadLocale();
 
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => di.sl<AuthCubit>()..checkAuthStatus(),
+          create: (context) => di.getIt<AuthCubit>()..checkAuthStatus(),
         ),
-        BlocProvider(
-          create: (context) => di.sl<LocaleCubit>(),
-        ),
+        BlocProvider(create: (context) => di.getIt<LocaleCubit>()),
       ],
       child: const MyApp(),
     ),
@@ -59,7 +57,7 @@ class MyApp extends StatelessWidget {
           splitScreenMode: true,
           builder: (context, child) {
             return MaterialApp.router(
-              routerConfig: di.sl<AppRouter>().router,
+              routerConfig: di.getIt<AppRouter>().router,
               debugShowCheckedModeBanner: false,
               title: 'SafeScan',
               locale: locale,
