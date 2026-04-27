@@ -90,6 +90,8 @@ class FileReportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final attributes = reportData.data!.attributes;
     final stats = attributes.lastAnalysisStats;
+    // Capture locale here — safe to call in build context
+    final appLanguage = Localizations.localeOf(context).languageCode;
 
     final harmless = stats?.harmless ?? 0;
     final malicious = stats?.malicious ?? 0;
@@ -277,7 +279,10 @@ class FileReportScreen extends StatelessWidget {
                               if (cached != null && cached.isNotEmpty) {
                                 cubit.loadCached(cached);
                               } else {
-                                cubit.generateFileExplanation(reportData);
+                                cubit.generateFileExplanation(
+                                  reportData,
+                                  appLanguage: appLanguage,
+                                );
                               }
                               return cubit;
                             },
