@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:safe_scan/core/route/app_router.dart';
 import 'package:safe_scan/features/auth/data/firebase_auth_repo.dart';
+import 'package:safe_scan/features/onboarding/presentation/cubits/onboarding_cubit.dart';
 import 'package:safe_scan/features/auth/presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'package:safe_scan/features/reports/data/shared_pref_reports_db.dart';
 import 'package:safe_scan/features/reports/data/sqflite_reports_db.dart';
@@ -18,6 +20,9 @@ final getIt = GetIt.instance;
 
 Future<void> init() async {
   // External
+  final sharedPreferences = await SharedPreferences.getInstance();
+  getIt.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+
   getIt.registerLazySingleton<FirebaseAuth>(
     () => FirebaseAuth.instance,
   ); // to call it use sl<FirebaseAuth>()
@@ -37,6 +42,9 @@ Future<void> init() async {
   ); // to call it use sl<ApiRepo>()
 
   // Cubits
+  getIt.registerFactory<OnboardingCubit>(
+    () => OnboardingCubit(getIt<SharedPreferences>()),
+  );
   getIt.registerLazySingleton<AuthCubit>(
     () => AuthCubit(getIt<FirebaseAuthRepo>()),
   ); // to call it use sl<AuthCubit>()

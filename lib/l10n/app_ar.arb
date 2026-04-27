@@ -65,6 +65,24 @@
   "noFileSelected": "لم يتم اختيار أي ملف",
   "errorPickingFile": "خطأ في اختيار الملف: {error}",
 
+  "onboardingSkip": "تخطي",
+  "onboardingNext": "التالي",
+  "onboardingDone": "ابدأ الآن",
+
+  "onboardingTitle1": "مرحباً بك في Safe Scan",
+  "onboardingDesc1": "رفيقك الذكي في الأمن السيبراني — افحص الروابط والملفات والنطاقات بحثاً عن التهديدات في ثوانٍ باستخدام معلومات التهديدات الفورية.",
+  "onboardingStat1": "مدعوم بتطبيق Safe Scan",
+  "onboardingHighlight1": "🛡️",
+
+  "onboardingTitle2": "افحص واكتشف التهديدات",
+  "onboardingDesc2": "حلّل الروابط للكشف عن التصيد الاحتيالي، وتحقق من بصمات الملفات في قواعد بيانات البرمجيات الخبيثة، واحصل على تقارير مفصلة عن سمعة النطاقات وعناوين IP.",
+  "onboardingStat2": "أكثر من 70 محرك مضاد فيروسات يفحص لأجلك",
+  "onboardingHighlight2": "+70",
+
+  "onboardingTitle3": "ابقَ محمياً، ابقَ مطّلعاً",
+  "onboardingDesc3": "احصل على نتائج مرمّزة بالألوان — أخضر للآمن، أصفر للمشبوه، أحمر للخبيث. احفظ سجل الفحص واستقبل تنبيهات الأمان الفورية.",
+  "onboardingStat3": "من مصادر التهديدات الفورية",
+  "onboardingHighlight3": "24/7"
   "securityAwareness": "التوعية الأمنية",
   "awarenessSubtitle": "تعلم كيف تحمي نفسك من التهديدات السيبرانية الشائعة.",
   "phishingAttacks": "هجمات التصيد الاحتيالي",

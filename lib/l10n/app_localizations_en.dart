@@ -189,6 +189,52 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingDone => 'Get Started';
+
+  @override
+  String get onboardingTitle1 => 'Welcome to Safe Scan';
+
+  @override
+  String get onboardingDesc1 =>
+      'Your smart cybersecurity companion — scan URLs, files, and domains for threats in seconds using real-time threat intelligence.';
+
+  @override
+  String get onboardingStat1 => 'Powered by Safe Scan App';
+
+  @override
+  String get onboardingHighlight1 => '🛡️';
+
+  @override
+  String get onboardingTitle2 => 'Scan & Detect Threats';
+
+  @override
+  String get onboardingDesc2 =>
+      'Analyze URLs for phishing, verify file hashes against malware databases, and get detailed domain & IP reputation reports — all in one place.';
+
+  @override
+  String get onboardingStat2 => '70+ antivirus engines scanning for you';
+
+  @override
+  String get onboardingHighlight2 => '70+';
+
+  @override
+  String get onboardingTitle3 => 'Stay Protected, Stay Informed';
+
+  @override
+  String get onboardingDesc3 =>
+      'Get color-coded results — green for safe, yellow for suspicious, red for malicious. Save your scan history and receive real-time security alerts.';
+
+  @override
+  String get onboardingStat3 => 'from real-time threat feeds';
+
+  @override
+  String get onboardingHighlight3 => '24/7';
   String get securityAwareness => 'Security Awareness';
 
   @override

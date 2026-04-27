@@ -189,6 +189,52 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get onboardingSkip => 'تخطي';
+
+  @override
+  String get onboardingNext => 'التالي';
+
+  @override
+  String get onboardingDone => 'ابدأ الآن';
+
+  @override
+  String get onboardingTitle1 => 'مرحباً بك في Safe Scan';
+
+  @override
+  String get onboardingDesc1 =>
+      'رفيقك الذكي في الأمن السيبراني — افحص الروابط والملفات والنطاقات بحثاً عن التهديدات في ثوانٍ باستخدام معلومات التهديدات الفورية.';
+
+  @override
+  String get onboardingStat1 => 'مدعوم بتطبيق Safe Scan';
+
+  @override
+  String get onboardingHighlight1 => '🛡️';
+
+  @override
+  String get onboardingTitle2 => 'افحص واكتشف التهديدات';
+
+  @override
+  String get onboardingDesc2 =>
+      'حلّل الروابط للكشف عن التصيد الاحتيالي، وتحقق من بصمات الملفات في قواعد بيانات البرمجيات الخبيثة، واحصل على تقارير مفصلة عن سمعة النطاقات وعناوين IP.';
+
+  @override
+  String get onboardingStat2 => 'أكثر من 70 محرك مضاد فيروسات يفحص لأجلك';
+
+  @override
+  String get onboardingHighlight2 => '+70';
+
+  @override
+  String get onboardingTitle3 => 'ابقَ محمياً، ابقَ مطّلعاً';
+
+  @override
+  String get onboardingDesc3 =>
+      'احصل على نتائج مرمّزة بالألوان — أخضر للآمن، أصفر للمشبوه، أحمر للخبيث. احفظ سجل الفحص واستقبل تنبيهات الأمان الفورية.';
+
+  @override
+  String get onboardingStat3 => 'من مصادر التهديدات الفورية';
+
+  @override
+  String get onboardingHighlight3 => '24/7';
   String get securityAwareness => 'التوعية الأمنية';
 
   @override
