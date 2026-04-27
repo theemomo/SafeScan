@@ -24,7 +24,11 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
   static const int _whoisMaxLength = 800;
 
   /// Generates an explanation for a Domain scan report.
-  Future<void> generateExplanation(DomainResponseModel reportData) async {
+  /// [appLanguage] should be the BCP-47 language code of the app locale (e.g. 'ar', 'en').
+  Future<void> generateExplanation(
+    DomainResponseModel reportData, {
+    String appLanguage = 'en',
+  }) async {
     emit(AiExplanationLoading());
 
     try {
@@ -33,6 +37,7 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
         entityName: reportData.data?.id ?? 'this domain',
         entityType: 'domain',
         scanSummary: scanSummary,
+        appLanguage: appLanguage,
       );
 
       await _executeGeminiPrompt(prompt);
@@ -51,9 +56,11 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
   }
 
   /// Generates an explanation for a File scan report.
+  /// [appLanguage] should be the BCP-47 language code of the app locale (e.g. 'ar', 'en').
   Future<void> generateFileExplanation(
-    file_model.FileResponseModel reportData,
-  ) async {
+    file_model.FileResponseModel reportData, {
+    String appLanguage = 'en',
+  }) async {
     emit(AiExplanationLoading());
 
     try {
@@ -62,6 +69,7 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
         entityName: reportData.data?.attributes.meaningfulName ?? 'this file',
         entityType: 'file',
         scanSummary: scanSummary,
+        appLanguage: appLanguage,
       );
 
       await _executeGeminiPrompt(prompt);
@@ -232,12 +240,29 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
   }
 
   /// Builds the full prompt string for Gemini.
+  /// [appLanguage] controls which language the AI must respond in.
   String _buildPrompt({
     required String entityName,
     required String entityType,
     required String scanSummary,
+    String appLanguage = 'en',
   }) {
+    final languageInstruction = appLanguage == 'ar'
+        ? '''
+أنت مساعد ذكاء اصطناعي مدمج داخل تطبيق جوال.
+يجب أن تكون إجابتك باللغة العربية فقط، بغض النظر عن لغة المستخدم.
+استخدم لغة عربية واضحة وبسيطة ومناسبة لمستخدم غير متخصص.
+لا تخلط بين العربية والإنجليزية في نفس الرد إلا للمصطلحات التقنية الضرورية.
+'''
+        : '''
+You are an AI assistant built inside a mobile app.
+Always respond in English only, regardless of the user's input language.
+Use clear, simple, and friendly language suitable for non-technical users.
+Do not mix languages in the same response.
+''';
+
     return '''
+$languageInstruction
 You are a cybersecurity expert helping everyday non-technical users understand online safety reports.
 Analyze the following VirusTotal $entityType scan results and provide:
 
