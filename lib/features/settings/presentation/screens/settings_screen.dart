@@ -32,8 +32,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         shadowColor: Colors.transparent,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.menu, color: Colors.black87, size: 22.sp),
-            onPressed: () => Scaffold.of(context).openDrawer(),
+            icon: Icon(Icons.arrow_back, color: Colors.black87, size: 22.sp),
+            onPressed: () => context.pop(),
           ),
         ),
         title: Row(
