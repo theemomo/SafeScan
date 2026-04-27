@@ -51,20 +51,20 @@ Future<void> init() async {
   // Local Database
   // =====================================================================
   // Reports (SQLite) use this or the shared preferences below
-  getIt.registerLazySingleton<SqfliteReportsDB>(
-    () => SqfliteReportsDB(),
-  );
-  getIt.registerFactory<SavedReportsCubit>(
-    () => SavedReportsCubit(getIt<SqfliteReportsDB>()),
-  );
-
-  // Reports (Shared Preferences) use this or the sqflite above
-  // getIt.registerLazySingleton<SharedPreferencesReportsDB>(
-  //   () => SharedPreferencesReportsDB(),
+  // getIt.registerLazySingleton<SqfliteReportsDB>(
+  //   () => SqfliteReportsDB(),
   // );
   // getIt.registerFactory<SavedReportsCubit>(
-  //   () => SavedReportsCubit(getIt<SharedPreferencesReportsDB>()),
+  //   () => SavedReportsCubit(getIt<SqfliteReportsDB>()),
   // );
+
+  // Reports (Shared Preferences) use this or the sqflite above
+  getIt.registerLazySingleton<SharedPreferencesReportsDB>(
+    () => SharedPreferencesReportsDB(),
+  );
+  getIt.registerFactory<SavedReportsCubit>(
+    () => SavedReportsCubit(getIt<SharedPreferencesReportsDB>()),
+  );
 
   // =====================================================================
   // Locale / Settings

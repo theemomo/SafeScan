@@ -11,11 +11,11 @@ class SqfliteReportsDB implements LocalDatabaseRepo {
   Database? _db;
 
   Future<Database> get database async {
-    _db ??= await _initDb();
+    _db ??= await initDb();
     return _db!;
   }
 
-  Future<Database> _initDb() async {
+  Future<Database> initDb() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _dbName);
 

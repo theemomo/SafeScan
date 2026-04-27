@@ -21,7 +21,6 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
     }
   }
 
-
   static const int _whoisMaxLength = 800;
 
   /// Generates an explanation for a Domain scan report.
@@ -40,8 +39,11 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
     } catch (e) {
       final errorStr = e.toString();
       if (errorStr.contains('429')) {
-        emit(AiExplanationError(
-            'API Rate Limit Exceeded.\nPlease wait a minute before requesting another AI summary.'));
+        emit(
+          AiExplanationError(
+            'API Rate Limit Exceeded.\nPlease wait a minute before requesting another AI summary.',
+          ),
+        );
       } else {
         emit(AiExplanationError('AI Analysis failed: $errorStr'));
       }
@@ -50,7 +52,8 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
 
   /// Generates an explanation for a File scan report.
   Future<void> generateFileExplanation(
-      file_model.FileResponseModel reportData) async {
+    file_model.FileResponseModel reportData,
+  ) async {
     emit(AiExplanationLoading());
 
     try {
@@ -65,8 +68,11 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
     } catch (e) {
       final errorStr = e.toString();
       if (errorStr.contains('429')) {
-        emit(AiExplanationError(
-            'API Rate Limit Exceeded.\nPlease wait a minute before requesting another AI summary.'));
+        emit(
+          AiExplanationError(
+            'API Rate Limit Exceeded.\nPlease wait a minute before requesting another AI summary.',
+          ),
+        );
       } else {
         emit(AiExplanationError('AI Analysis failed: $errorStr'));
       }
@@ -75,9 +81,7 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
 
   /// Shared method to execute the prompt via Gemini.
   Future<void> _executeGeminiPrompt(String prompt) async {
-    final response = await Gemini.instance.prompt(
-      parts: [Part.text(prompt)],
-    );
+    final response = await Gemini.instance.prompt(parts: [Part.text(prompt)]);
 
     final text = response?.output;
 
@@ -189,27 +193,30 @@ class AiExplanationCubit extends Cubit<AiExplanationState> {
   /// Builds a comma-separated string of vendors that flagged a Domain.
   String _buildMaliciousVendorsString(List<LastAnalysisResult> results) {
     return results
-            .where(
-              (r) =>
-                  r.category == Category.MALICIOUS ||
-                  r.category == Category.SUSPICIOUS,
-            )
-            .map((r) => '${r.engineName} (${resultValues.reverse[r.result]})')
-            .join(', ');
+        .where(
+          (r) =>
+              r.category == Category.MALICIOUS ||
+              r.category == Category.SUSPICIOUS,
+        )
+        .map((r) => '${r.engineName} (${resultValues.reverse[r.result]})')
+        .join(', ');
   }
 
   /// Builds a comma-separated string of vendors that flagged a File.
   String _buildFileMaliciousVendorsString(
-      List<file_model.LastAnalysisResult> results) {
+    List<file_model.LastAnalysisResult> results,
+  ) {
     return results
-            .where(
-              (r) =>
-                  r.category == file_model.Category.MALICIOUS ||
-                  r.category == file_model.Category.SUSPICIOUS,
-            )
-            .map((r) =>
-                '${r.engineName} (${file_model.resultValues.reverse[r.result]})')
-            .join(', ');
+        .where(
+          (r) =>
+              r.category == file_model.Category.MALICIOUS ||
+              r.category == file_model.Category.SUSPICIOUS,
+        )
+        .map(
+          (r) =>
+              '${r.engineName} (${file_model.resultValues.reverse[r.result]})',
+        )
+        .join(', ');
   }
 
   /// Helper to format bytes to human readable string.

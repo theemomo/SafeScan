@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:safe_scan/core/route/route_names.dart';
 import 'package:safe_scan/core/utils/app_colors.dart';
+import 'package:safe_scan/core/widgets/app_drawer.dart';
 import 'package:safe_scan/l10n/app_localizations.dart';
 import 'package:safe_scan/features/settings/presentation/cubits/locale_cubit.dart';
 
@@ -27,15 +28,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.white,
+        elevation: 0,
         shadowColor: Colors.transparent,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.menu, color: Colors.black87, size: 22.sp),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -74,6 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ],
       ),
+      drawer: const AppDrawer(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
