@@ -14,6 +14,7 @@ import 'package:safe_scan/features/scan/presentation/screens/file_report_screen.
 import 'package:safe_scan/features/scan/presentation/screens/home_screen.dart';
 import 'package:safe_scan/features/settings/presentation/screens/settings_screen.dart';
 import 'package:safe_scan/features/settings/presentation/screens/language_screen.dart';
+import 'package:safe_scan/features/settings/presentation/screens/awareness_screen.dart';
 
 class AppRouter {
   final AuthCubit authCubit;
@@ -91,6 +92,13 @@ class AppRouter {
             path: "language",
             builder: (context, state) {
               return const LanguageScreen();
+            },
+          ),
+          GoRoute(
+            name: RouteNames.awareness,
+            path: "awareness",
+            builder: (context, state) {
+              return const AwarenessScreen();
             },
           ),
         ],
