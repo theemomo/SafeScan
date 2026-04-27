@@ -187,4 +187,113 @@ class AppLocalizationsEn extends AppLocalizations {
   String errorPickingFile(String error) {
     return 'Error picking file: $error';
   }
+
+  @override
+  String get securityAwareness => 'Security Awareness';
+
+  @override
+  String get awarenessSubtitle =>
+      'Learn how to protect yourself against common cyber threats.';
+
+  @override
+  String get phishingAttacks => 'Phishing Attacks';
+
+  @override
+  String get phishingDesc =>
+      'Phishing is a fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.';
+
+  @override
+  String get commonAttacks => 'Most Common Attacks';
+
+  @override
+  String get spearPhishing => 'Spear Phishing';
+
+  @override
+  String get spearPhishingDesc =>
+      'Targeted attacks using personalized information to trick specific individuals.';
+
+  @override
+  String get whaling => 'Whaling';
+
+  @override
+  String get whalingDesc =>
+      'Phishing attacks directed specifically at senior executives and high-profile targets.';
+
+  @override
+  String get smishing => 'Smishing (SMS Phishing)';
+
+  @override
+  String get smishingDesc =>
+      'Fraudulent text messages designed to trick you into revealing personal info.';
+
+  @override
+  String get vishing => 'Vishing (Voice Phishing)';
+
+  @override
+  String get vishingDesc =>
+      'Phone scams where attackers try to manipulate you into sharing data or transferring money.';
+
+  @override
+  String get protectionTips => 'How to Protect Yourself';
+
+  @override
+  String get tip1 =>
+      'Never click on suspicious links or download unverified attachments.';
+
+  @override
+  String get tip2 =>
+      'Verify the sender\'s email address carefully (e.g., support@paypaI.com vs support@paypal.com).';
+
+  @override
+  String get tip3 =>
+      'Enable Two-Factor Authentication (2FA) on all your accounts.';
+
+  @override
+  String get tip4 =>
+      'Never share your passwords, OTPs, or financial information over phone or email.';
+
+  @override
+  String get tip5 => 'Keep your software and operating systems up to date.';
+
+  @override
+  String get attackStatistics => 'Global Attack Statistics';
+
+  @override
+  String get stat1 => '36% of all data breaches involve phishing.';
+
+  @override
+  String get stat2 =>
+      '83% of organizations experienced a successful email-based phishing attack in 2021.';
+
+  @override
+  String get stat3 =>
+      'Spear phishing accounts for 95% of enterprise network attacks.';
+
+  @override
+  String get stat4 =>
+      'Over 3.4 billion malicious emails are sent worldwide every day.';
+
+  @override
+  String get realWorldScenarios => 'Real-World Scenarios: What if...?';
+
+  @override
+  String get whatIfClickLink => 'What if I click a malicious link?';
+
+  @override
+  String get whatIfClickLinkDesc =>
+      'If you open a malicious link, you might be directed to a fake login page that looks exactly like a service you use (e.g., your bank or email). If you enter your credentials, the attackers steal them immediately. Sometimes, just visiting the site can silently download malware to your device.';
+
+  @override
+  String get whatIfOpenFile => 'What if I open a malicious file?';
+
+  @override
+  String get whatIfOpenFileDesc =>
+      'Opening a malicious attachment (like a fake PDF or Word document) can run hidden code. This could install \'Ransomware\' that encrypts all your personal files and demands money to unlock them, or a \'Keylogger\' that records everything you type, including your passwords.';
+
+  @override
+  String get whatIfEnterDetails => 'What if I give away my details?';
+
+  @override
+  String get whatIfEnterDetailsDesc =>
+      'Once attackers have your information, they can lock you out of your own accounts, steal your money, or impersonate you to trick your friends, family, or colleagues into sending them money.';
 }

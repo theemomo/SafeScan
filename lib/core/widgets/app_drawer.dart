@@ -119,6 +119,14 @@ class AppDrawer extends StatelessWidget {
                 context.pushReplacementNamed(RouteNames.settings);
               },
             ),
+            _DrawerNavTile(
+              icon: Icons.security_rounded,
+              label: l10n.securityAwareness,
+              onTap: () {
+                Navigator.of(context).pop();
+                context.pushReplacementNamed(RouteNames.awareness);
+              },
+            ),
 
             const Spacer(),
 

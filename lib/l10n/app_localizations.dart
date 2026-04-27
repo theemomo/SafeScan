@@ -433,6 +433,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error picking file: {error}'**
   String errorPickingFile(String error);
+
+  /// No description provided for @securityAwareness.
+  ///
+  /// In en, this message translates to:
+  /// **'Security Awareness'**
+  String get securityAwareness;
+
+  /// No description provided for @awarenessSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn how to protect yourself against common cyber threats.'**
+  String get awarenessSubtitle;
+
+  /// No description provided for @phishingAttacks.
+  ///
+  /// In en, this message translates to:
+  /// **'Phishing Attacks'**
+  String get phishingAttacks;
+
+  /// No description provided for @phishingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Phishing is a fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.'**
+  String get phishingDesc;
+
+  /// No description provided for @commonAttacks.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Common Attacks'**
+  String get commonAttacks;
+
+  /// No description provided for @spearPhishing.
+  ///
+  /// In en, this message translates to:
+  /// **'Spear Phishing'**
+  String get spearPhishing;
+
+  /// No description provided for @spearPhishingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Targeted attacks using personalized information to trick specific individuals.'**
+  String get spearPhishingDesc;
+
+  /// No description provided for @whaling.
+  ///
+  /// In en, this message translates to:
+  /// **'Whaling'**
+  String get whaling;
+
+  /// No description provided for @whalingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Phishing attacks directed specifically at senior executives and high-profile targets.'**
+  String get whalingDesc;
+
+  /// No description provided for @smishing.
+  ///
+  /// In en, this message translates to:
+  /// **'Smishing (SMS Phishing)'**
+  String get smishing;
+
+  /// No description provided for @smishingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Fraudulent text messages designed to trick you into revealing personal info.'**
+  String get smishingDesc;
+
+  /// No description provided for @vishing.
+  ///
+  /// In en, this message translates to:
+  /// **'Vishing (Voice Phishing)'**
+  String get vishing;
+
+  /// No description provided for @vishingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone scams where attackers try to manipulate you into sharing data or transferring money.'**
+  String get vishingDesc;
+
+  /// No description provided for @protectionTips.
+  ///
+  /// In en, this message translates to:
+  /// **'How to Protect Yourself'**
+  String get protectionTips;
+
+  /// No description provided for @tip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Never click on suspicious links or download unverified attachments.'**
+  String get tip1;
+
+  /// No description provided for @tip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify the sender\'s email address carefully (e.g., support@paypaI.com vs support@paypal.com).'**
+  String get tip2;
+
+  /// No description provided for @tip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Two-Factor Authentication (2FA) on all your accounts.'**
+  String get tip3;
+
+  /// No description provided for @tip4.
+  ///
+  /// In en, this message translates to:
+  /// **'Never share your passwords, OTPs, or financial information over phone or email.'**
+  String get tip4;
+
+  /// No description provided for @tip5.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your software and operating systems up to date.'**
+  String get tip5;
+
+  /// No description provided for @attackStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Global Attack Statistics'**
+  String get attackStatistics;
+
+  /// No description provided for @stat1.
+  ///
+  /// In en, this message translates to:
+  /// **'36% of all data breaches involve phishing.'**
+  String get stat1;
+
+  /// No description provided for @stat2.
+  ///
+  /// In en, this message translates to:
+  /// **'83% of organizations experienced a successful email-based phishing attack in 2021.'**
+  String get stat2;
+
+  /// No description provided for @stat3.
+  ///
+  /// In en, this message translates to:
+  /// **'Spear phishing accounts for 95% of enterprise network attacks.'**
+  String get stat3;
+
+  /// No description provided for @stat4.
+  ///
+  /// In en, this message translates to:
+  /// **'Over 3.4 billion malicious emails are sent worldwide every day.'**
+  String get stat4;
+
+  /// No description provided for @realWorldScenarios.
+  ///
+  /// In en, this message translates to:
+  /// **'Real-World Scenarios: What if...?'**
+  String get realWorldScenarios;
+
+  /// No description provided for @whatIfClickLink.
+  ///
+  /// In en, this message translates to:
+  /// **'What if I click a malicious link?'**
+  String get whatIfClickLink;
+
+  /// No description provided for @whatIfClickLinkDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'If you open a malicious link, you might be directed to a fake login page that looks exactly like a service you use (e.g., your bank or email). If you enter your credentials, the attackers steal them immediately. Sometimes, just visiting the site can silently download malware to your device.'**
+  String get whatIfClickLinkDesc;
+
+  /// No description provided for @whatIfOpenFile.
+  ///
+  /// In en, this message translates to:
+  /// **'What if I open a malicious file?'**
+  String get whatIfOpenFile;
+
+  /// No description provided for @whatIfOpenFileDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening a malicious attachment (like a fake PDF or Word document) can run hidden code. This could install \'Ransomware\' that encrypts all your personal files and demands money to unlock them, or a \'Keylogger\' that records everything you type, including your passwords.'**
+  String get whatIfOpenFileDesc;
+
+  /// No description provided for @whatIfEnterDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'What if I give away my details?'**
+  String get whatIfEnterDetails;
+
+  /// No description provided for @whatIfEnterDetailsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Once attackers have your information, they can lock you out of your own accounts, steal your money, or impersonate you to trick your friends, family, or colleagues into sending them money.'**
+  String get whatIfEnterDetailsDesc;
 }
 
 class _AppLocalizationsDelegate
