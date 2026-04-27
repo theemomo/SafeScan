@@ -235,4 +235,110 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardingHighlight3 => '24/7';
+  String get securityAwareness => 'التوعية الأمنية';
+
+  @override
+  String get awarenessSubtitle =>
+      'تعلم كيف تحمي نفسك من التهديدات السيبرانية الشائعة.';
+
+  @override
+  String get phishingAttacks => 'هجمات التصيد الاحتيالي';
+
+  @override
+  String get phishingDesc =>
+      'التصيد الاحتيالي هو محاولة احتيالية للحصول على معلومات حساسة عن طريق التنكر ككيان موثوق به في الاتصالات الإلكترونية.';
+
+  @override
+  String get commonAttacks => 'أشهر الهجمات';
+
+  @override
+  String get spearPhishing => 'التصيد الموجه';
+
+  @override
+  String get spearPhishingDesc =>
+      'هجمات مستهدفة تستخدم معلومات شخصية لخداع أفراد معينين.';
+
+  @override
+  String get whaling => 'صيد الحيتان';
+
+  @override
+  String get whalingDesc =>
+      'هجمات تصيد موجهة خصيصاً لكبار المديرين التنفيذيين والأهداف البارزة.';
+
+  @override
+  String get smishing => 'التصيد عبر الرسائل النصية (Smishing)';
+
+  @override
+  String get smishingDesc =>
+      'رسائل نصية احتيالية مصممة لخداعك للكشف عن معلومات شخصية.';
+
+  @override
+  String get vishing => 'التصيد الصوتي (Vishing)';
+
+  @override
+  String get vishingDesc =>
+      'عمليات احتيال هاتفية يحاول فيها المهاجمون التلاعب بك لمشاركة البيانات أو تحويل الأموال.';
+
+  @override
+  String get protectionTips => 'كيف تحمي نفسك';
+
+  @override
+  String get tip1 =>
+      'لا تنقر أبداً على الروابط المشبوهة أو تحمل مرفقات غير موثوقة.';
+
+  @override
+  String get tip2 =>
+      'تحقق من عنوان البريد الإلكتروني للمرسل بعناية (مثال: support@paypaI.com مقابل support@paypal.com).';
+
+  @override
+  String get tip3 => 'قم بتمكين المصادقة الثنائية (2FA) على جميع حساباتك.';
+
+  @override
+  String get tip4 =>
+      'لا تشارك أبداً كلمات المرور أو كلمات المرور لمرة واحدة أو المعلومات المالية عبر الهاتف أو البريد الإلكتروني.';
+
+  @override
+  String get tip5 => 'حافظ على تحديث البرامج وأنظمة التشغيل الخاصة بك.';
+
+  @override
+  String get attackStatistics => 'إحصائيات الهجمات العالمية';
+
+  @override
+  String get stat1 =>
+      '36% من جميع انتهاكات البيانات تنطوي على التصيد الاحتيالي.';
+
+  @override
+  String get stat2 =>
+      '83% من المؤسسات تعرضت لهجوم تصيد ناجح عبر البريد الإلكتروني في عام 2021.';
+
+  @override
+  String get stat3 => 'التصيد الموجه يمثل 95% من هجمات شبكات الشركات.';
+
+  @override
+  String get stat4 =>
+      'يتم إرسال أكثر من 3.4 مليار بريد إلكتروني ضار حول العالم يومياً.';
+
+  @override
+  String get realWorldScenarios => 'سيناريوهات من العالم الحقيقي: ماذا لو...؟';
+
+  @override
+  String get whatIfClickLink => 'ماذا لو نقرت على رابط ضار؟';
+
+  @override
+  String get whatIfClickLinkDesc =>
+      'إذا فتحت رابطاً ضاراً، فقد يتم توجيهك إلى صفحة تسجيل دخول مزيفة تبدو تماماً مثل خدمة تستخدمها (مثل البنك أو البريد الإلكتروني الخاص بك). إذا أدخلت بياناتك، يسرقها المهاجمون على الفور. في بعض الأحيان، قد تؤدي زيارة الموقع فقط إلى تنزيل برامج ضارة بصمت على جهازك.';
+
+  @override
+  String get whatIfOpenFile => 'ماذا لو فتحت ملفاً ضاراً؟';
+
+  @override
+  String get whatIfOpenFileDesc =>
+      'قد يؤدي فتح مرفق ضار (مثل ملف PDF أو Word مزيف) إلى تشغيل تعليمات برمجية مخفية. يمكن أن يؤدي هذا إلى تثبيت \'برامج الفدية\' التي تقوم بتشفير جميع ملفاتك الشخصية وتطلب أموالاً لفتحها، أو \'برنامج تسجيل المفاتيح\' الذي يسجل كل ما تكتبه، بما في ذلك كلمات المرور الخاصة بك.';
+
+  @override
+  String get whatIfEnterDetails => 'ماذا لو قمت بإعطاء بياناتي؟';
+
+  @override
+  String get whatIfEnterDetailsDesc =>
+      'بمجرد حصول المهاجمين على معلوماتك، يمكنهم إخراجك من حساباتك الخاصة، أو سرقة أموالك، أو انتحال شخصيتك لخداع أصدقائك أو عائلتك أو زملائك لإرسال الأموال إليهم.';
 }
