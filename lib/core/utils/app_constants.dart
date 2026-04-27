@@ -4,4 +4,5 @@ class AppConstants {
       "https://www.virustotal.com/api/v3/domains/";
   static const String apiKey =
       "YOUR_API_KEY_HERE"; // Replace with your actual API key
+  static const String hasSeenOnboarding = "HAS_SEEN_ONBOARDING";
 }

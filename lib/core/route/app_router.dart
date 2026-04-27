@@ -14,6 +14,9 @@ import 'package:safe_scan/features/scan/presentation/screens/file_report_screen.
 import 'package:safe_scan/features/scan/presentation/screens/home_screen.dart';
 import 'package:safe_scan/features/settings/presentation/screens/settings_screen.dart';
 import 'package:safe_scan/features/settings/presentation/screens/language_screen.dart';
+import 'package:safe_scan/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:safe_scan/core/utils/app_constants.dart';
 
 class AppRouter {
   final AuthCubit authCubit;
@@ -32,14 +35,28 @@ class AppRouter {
       final bool isAuthenticated = authCubit.state is Authenticated;
       final bool isLoggingIn = state.matchedLocation == '/login';
       final bool isRegistering = state.matchedLocation == '/register';
+      final bool isOnboarding = state.matchedLocation == '/onboarding';
+      
+      final sharedPrefs = getIt<SharedPreferences>();
+      final bool hasSeenOnboarding = sharedPrefs.getBool(AppConstants.hasSeenOnboarding) ?? false;
+
+      // Handle onboarding first
+      if (!hasSeenOnboarding && !isOnboarding) {
+        return '/onboarding';
+      }
+
+      // If they have seen onboarding but are trying to access it, redirect them
+      if (hasSeenOnboarding && isOnboarding) {
+        return isAuthenticated ? '/' : '/login';
+      }
 
       // Unauthenticated user trying to access a protected route
-      if (!isAuthenticated && !isLoggingIn && !isRegistering) {
+      if (!isAuthenticated && !isLoggingIn && !isRegistering && !isOnboarding) {
         return '/login';
       }
 
       // Authenticated user trying to access login or register page
-      if (isAuthenticated && isLoggingIn) {
+      if (isAuthenticated && (isLoggingIn || isRegistering)) {
         return '/';
       }
 
@@ -107,6 +124,13 @@ class AppRouter {
         path: '/register',
         builder: (BuildContext context, GoRouterState state) {
           return const RegisterScreen();
+        },
+      ),
+      GoRoute(
+        name: RouteNames.onboarding,
+        path: '/onboarding',
+        builder: (BuildContext context, GoRouterState state) {
+          return const OnboardingScreen();
         },
       ),
     ],

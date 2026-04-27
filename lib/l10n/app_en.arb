@@ -79,5 +79,24 @@
     "placeholders": {
       "error": { "type": "String" }
     }
-  }
+  },
+
+  "onboardingSkip": "Skip",
+  "onboardingNext": "Next",
+  "onboardingDone": "Get Started",
+
+  "onboardingTitle1": "Welcome to Safe Scan",
+  "onboardingDesc1": "Your smart cybersecurity companion — scan URLs, files, and domains for threats in seconds using real-time threat intelligence.",
+  "onboardingStat1": "Powered by Safe Scan App",
+  "onboardingHighlight1": "🛡️",
+
+  "onboardingTitle2": "Scan & Detect Threats",
+  "onboardingDesc2": "Analyze URLs for phishing, verify file hashes against malware databases, and get detailed domain & IP reputation reports — all in one place.",
+  "onboardingStat2": "70+ antivirus engines scanning for you",
+  "onboardingHighlight2": "70+",
+
+  "onboardingTitle3": "Stay Protected, Stay Informed",
+  "onboardingDesc3": "Get color-coded results — green for safe, yellow for suspicious, red for malicious. Save your scan history and receive real-time security alerts.",
+  "onboardingStat3": "from real-time threat feeds",
+  "onboardingHighlight3": "24/7"
 }

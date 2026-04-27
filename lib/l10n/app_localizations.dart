@@ -433,6 +433,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error picking file: {error}'**
   String errorPickingFile(String error);
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get onboardingDone;
+
+  /// No description provided for @onboardingTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Safe Scan'**
+  String get onboardingTitle1;
+
+  /// No description provided for @onboardingDesc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Your smart cybersecurity companion — scan URLs, files, and domains for threats in seconds using real-time threat intelligence.'**
+  String get onboardingDesc1;
+
+  /// No description provided for @onboardingStat1.
+  ///
+  /// In en, this message translates to:
+  /// **'Powered by Safe Scan App'**
+  String get onboardingStat1;
+
+  /// No description provided for @onboardingHighlight1.
+  ///
+  /// In en, this message translates to:
+  /// **'🛡️'**
+  String get onboardingHighlight1;
+
+  /// No description provided for @onboardingTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan & Detect Threats'**
+  String get onboardingTitle2;
+
+  /// No description provided for @onboardingDesc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze URLs for phishing, verify file hashes against malware databases, and get detailed domain & IP reputation reports — all in one place.'**
+  String get onboardingDesc2;
+
+  /// No description provided for @onboardingStat2.
+  ///
+  /// In en, this message translates to:
+  /// **'70+ antivirus engines scanning for you'**
+  String get onboardingStat2;
+
+  /// No description provided for @onboardingHighlight2.
+  ///
+  /// In en, this message translates to:
+  /// **'70+'**
+  String get onboardingHighlight2;
+
+  /// No description provided for @onboardingTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay Protected, Stay Informed'**
+  String get onboardingTitle3;
+
+  /// No description provided for @onboardingDesc3.
+  ///
+  /// In en, this message translates to:
+  /// **'Get color-coded results — green for safe, yellow for suspicious, red for malicious. Save your scan history and receive real-time security alerts.'**
+  String get onboardingDesc3;
+
+  /// No description provided for @onboardingStat3.
+  ///
+  /// In en, this message translates to:
+  /// **'from real-time threat feeds'**
+  String get onboardingStat3;
+
+  /// No description provided for @onboardingHighlight3.
+  ///
+  /// In en, this message translates to:
+  /// **'24/7'**
+  String get onboardingHighlight3;
 }
 
 class _AppLocalizationsDelegate

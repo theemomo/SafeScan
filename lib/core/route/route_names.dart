@@ -7,4 +7,5 @@ class RouteNames {
   static const String savedReports = 'saved-reports';
   static const String settings = 'settings';
   static const String language = 'language';
+  static const String onboarding = 'onboarding';
 }
