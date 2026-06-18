@@ -82,7 +82,7 @@
   "onboardingTitle3": "ابقَ محمياً، ابقَ مطّلعاً",
   "onboardingDesc3": "احصل على نتائج مرمّزة بالألوان — أخضر للآمن، أصفر للمشبوه، أحمر للخبيث. احفظ سجل الفحص واستقبل تنبيهات الأمان الفورية.",
   "onboardingStat3": "من مصادر التهديدات الفورية",
-  "onboardingHighlight3": "24/7"
+  "onboardingHighlight3": "24/7",
   "securityAwareness": "التوعية الأمنية",
   "awarenessSubtitle": "تعلم كيف تحمي نفسك من التهديدات السيبرانية الشائعة.",
   "phishingAttacks": "هجمات التصيد الاحتيالي",

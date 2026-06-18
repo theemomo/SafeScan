@@ -235,6 +235,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingHighlight3 => '24/7';
+
+  @override
   String get securityAwareness => 'Security Awareness';
 
   @override

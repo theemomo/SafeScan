@@ -235,6 +235,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardingHighlight3 => '24/7';
+
+  @override
   String get securityAwareness => 'التوعية الأمنية';
 
   @override

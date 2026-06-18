@@ -523,6 +523,7 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'24/7'**
   String get onboardingHighlight3;
+
   /// No description provided for @securityAwareness.
   ///
   /// In en, this message translates to:
